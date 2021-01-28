@@ -1,30 +1,39 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QHBoxLayout, QPushButton, QApplication, QStyle
+from PyQt5.QtWidgets import QMainWindow, QWidget, QHBoxLayout, QPushButton, QApplication, QStyle, QFrame
 
 
 class MainWin(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setinitUI(self)
+        self.setinitUI()
 
-    def setinitUI(self, MWindow):
-        MWindow.setWindowTitle('QSS TEST WINDOW')
-        MWindow.resize(800, 600)
+    def leftFrame(self):
+        #创建FRAME
+        leftframe = QFrame(self.centralwidget)
+        leftframe.resize(600,130)
+        leftframe.setMaximumWidth(130)
+        leftframe.setStyleSheet("background-color:green;border:0px")
+        return leftframe
 
-        self.centralwidget = QWidget(MWindow)
-        MWindow.setCentralWidget(self.centralwidget)
+    def rightFrame(self):
+        rightframe = QFrame(self.centralwidget)
+        rightframe.setStyleSheet("background-color:yellow;border:0px")
+        return rightframe
+
+    def setinitUI(self):
+        self.setWindowTitle('QSS TEST WINDOW')
+        self.resize(800, 600)
+
+        self.centralwidget = QWidget()
+        self.setCentralWidget(self.centralwidget)
         hbox = QHBoxLayout(self.centralwidget)
 
-        btn_1 = QPushButton("A")
-        btn_1.setFixedSize(100, 30)  # 固定尺寸
-        btn_1.setIcon(QApplication.style().standardIcon(QStyle.StandardPixmap(27)))
+        self.m_leftframe = self.leftFrame()
+        self.m_rightframe = self.rightFrame()
 
-        btn_2 = QPushButton("B")
-        btn_2.setFixedSize(100, 30)
-        btn_2.setIcon(QApplication.style().standardIcon(QStyle.StandardPixmap(27)))
 
-        hbox.addWidget(btn_1)
-        hbox.addWidget(btn_2)
-        MWindow.setLayout(hbox)
+        hbox.addWidget(self.m_leftframe)
+        hbox.addWidget(self.m_rightframe)
+        self.setLayout(hbox)
 
-        self.statusbar = MWindow.statusBar()
-        self.statusbar.showMessage("程序运行重")
+        self.statusbar = self.statusBar()
+        self.statusbar.showMessage("程序运行中")
