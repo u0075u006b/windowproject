@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>847</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QSplitter" name="splitter_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QTreeWidget" name="treeWidget_2">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::DefaultContextMenu</enum>
+       </property>
+       <property name="midLineWidth">
+        <number>-4</number>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAsNeeded</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="dragEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="dragDropOverwriteMode">
+        <bool>false</bool>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::NoDragDrop</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>false</bool>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerItem</enum>
+       </property>
+       <property name="indentation">
+        <number>20</number>
+       </property>
+       <property name="rootIsDecorated">
+        <bool>true</bool>
+       </property>
+       <property name="uniformRowHeights">
+        <bool>false</bool>
+       </property>
+       <property name="itemsExpandable">
+        <bool>true</bool>
+       </property>
+       <property name="sortingEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="animated">
+        <bool>false</bool>
+       </property>
+       <property name="allColumnsShowFocus">
+        <bool>false</bool>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+       <property name="headerHidden">
+        <bool>true</bool>
+       </property>
+       <property name="expandsOnDoubleClick">
+        <bool>true</bool>
+       </property>
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="headerCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="headerDefaultSectionSize">
+        <number>100</number>
+       </attribute>
+       <attribute name="headerHighlightSections">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="headerShowSortIndicator" stdset="0">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>项目C</string>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+        <property name="background">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>191</red>
+           <green>191</green>
+           <blue>191</blue>
+          </color>
+         </brush>
+        </property>
+        <property name="foreground">
+         <brush brushstyle="NoBrush">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </property>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>新建项目</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>项目B</string>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+        <property name="background">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>170</red>
+           <green>170</green>
+           <blue>170</blue>
+          </color>
+         </brush>
+        </property>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>新建项目</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>项目A</string>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+        <property name="background">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>191</red>
+           <green>191</green>
+           <blue>191</blue>
+          </color>
+         </brush>
+        </property>
+        <property name="foreground">
+         <brush brushstyle="NoBrush">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </property>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignLeading|AlignVCenter</set>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normalon>../../../../素材/cycxtb/cycxtb 005.png</normalon>
+          </iconset>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>新建项目</string>
+         </property>
+         <property name="textAlignment">
+          <set>AlignLeading|AlignVCenter</set>
+         </property>
+         <property name="background">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </property>
+         <property name="foreground">
+          <brush brushstyle="NoBrush">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>新建项目</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>新建子项目</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+       </item>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>847</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionSTART"/>
+    <addaction name="separator"/>
+    <addaction name="actionONE"/>
+    <addaction name="actionTOW"/>
+    <addaction name="separator"/>
+    <addaction name="actionhow"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolBar{
+background-color:rgb(241, 241, 241);
+}</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>16</width>
+     <height>16</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionone"/>
+   <addaction name="separator"/>
+   <addaction name="actiontow"/>
+   <addaction name="separator"/>
+  </widget>
+  <action name="actionone">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normalon>../../../../../../.designer/main/icon/001.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>one</string>
+   </property>
+   <property name="iconText">
+    <string>one</string>
+   </property>
+   <property name="toolTip">
+    <string>one</string>
+   </property>
+  </action>
+  <action name="actiontow">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../../../../.designer/main/icon/001.png</normaloff>../../../../../../.designer/main/icon/001.png</iconset>
+   </property>
+   <property name="text">
+    <string>tow</string>
+   </property>
+   <property name="toolTip">
+    <string>tow</string>
+   </property>
+  </action>
+  <action name="actionSTART">
+   <property name="text">
+    <string>START</string>
+   </property>
+  </action>
+  <action name="actionONE">
+   <property name="text">
+    <string>ONE</string>
+   </property>
+  </action>
+  <action name="actionTOW">
+   <property name="text">
+    <string>TOW</string>
+   </property>
+  </action>
+  <action name="actionhow">
+   <property name="text">
+    <string>how</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
