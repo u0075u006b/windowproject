@@ -1,4 +1,5 @@
 from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QStatusBar, QWidget, QHBoxLayout, QFrame, QLabel, QListWidget, \
     QFormLayout, QPushButton, QListWidgetItem,QCheckBox
 
@@ -43,6 +44,7 @@ class TopButton(QPushButton):
         self.setCheckable(True) # 设置可选中
         self.setChecked(True)
         self.setText(name)
+        self.setIcon(QIcon("./source/icon/plus1518%26.svg"))
         self.setFixedHeight(24)
         self.setStyleSheet('QPushButton {background-color:'
                            'qlineargradient(spread:pad, x1:0, x2:0, y1:0, y2:1, stop: 0 rgba(255,255,255,255),stop: 0.4 rgba(240,240,240,255),stop: 1 rgba(180,180,180,255));'
@@ -71,7 +73,6 @@ class LeftItem(QListWidget):
         self.f = ItemWidget(self.sub_item, self.itemlist)
         self.setItemWidget(self.sub_item,self.f)
         self.sub_item.setHidden(True)
-
 
         self.top = QListWidgetItem(self)
         self.btn = TopButton(self.top,self.btname)
