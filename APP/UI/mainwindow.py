@@ -2,6 +2,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QStatusBar, QWidget, QHBoxLayout, QFrame, QLabel, \
     QFormLayout
 from .vtoolmenu import LeftItem
+from .vtoolmenu_info import MENU_INFO
 
 
 
@@ -15,7 +16,7 @@ class Left_Frame_0(QFrame):
         self.setStyleSheet("background-color:rgba(255,255,255,255)")
         box = QFormLayout()
         box.setContentsMargins(0,0,0,0)
-        t_item_0 = LeftItem("TOPBTT1",['bt1','bt2','bt3'])
+        t_item_0 = LeftItem(MENU_INFO.__menu_info__)
         box.addRow(t_item_0)
         self.setLayout(box)
 
