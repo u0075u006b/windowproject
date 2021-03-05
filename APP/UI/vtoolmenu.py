@@ -11,7 +11,7 @@ class ItemWidget(QWidget):
         self.item = item
 
         self.lay = QFormLayout(self)
-        self.lay.setContentsMargins(0,5,0,5)
+        self.lay.setContentsMargins(3,5,0,5)
         self.lay.setSpacing(0)
         self.lay.setVerticalSpacing(3)
         self.bt1 = QPushButton("A")
@@ -45,6 +45,7 @@ class TopButton(QPushButton):
         self.setChecked(True)
         self.setText(name)
         self.setIcon(QIcon("./source/icon/plus1518%26.svg"))
+
         self.setFixedHeight(24)
         self.setStyleSheet('QPushButton {background-color:'
                            'qlineargradient(spread:pad, x1:0, x2:0, y1:0, y2:1, stop: 0 rgba(255,255,255,255),stop: 0.4 rgba(240,240,240,255),stop: 1 rgba(180,180,180,255));'

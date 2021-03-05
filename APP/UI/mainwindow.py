@@ -1,13 +1,15 @@
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QStatusBar, QWidget, QHBoxLayout, QFrame, QLabel, \
     QFormLayout
 from .vtoolmenu import LeftItem
 
 
+
 class Left_Frame_0(QFrame):
     def __init__(self):
         super(Left_Frame_0, self).__init__()
-        self.setMaximumWidth(200)
-        self.setMinimumWidth(200)
+        self.setMaximumWidth(150)
+        self.setMinimumWidth(150)
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Sunken)
         self.setStyleSheet("background-color:rgba(255,255,255,255)")
@@ -36,7 +38,8 @@ class M_window(QMainWindow):
 
     def mainUI(self):
         self.setWindowTitle(M_window.appname)
-        self.resize(800,600)
+        self.resize(900,600)
+        self.setWindowIcon(QIcon("./source/icon/mianwin5050.svg"))
         self.setCentralWidget(self.central_widget)
         box_0 = QHBoxLayout()
         box_0.setContentsMargins(0,0,0,0)
