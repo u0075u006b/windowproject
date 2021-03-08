@@ -85,8 +85,8 @@ class LeftItem(QListWidget):
         self.setItemWidget(self.sub_item,self.f)
         self.sub_item.setHidden(True)
 
-class Creat_menuUI():
-    def __init__(self,factor):
-        self.factor = factor
-
-    def
+# class Creat_menuUI():
+#     def __init__(self,factor):
+#         self.factor = factor
+#
+#     def
