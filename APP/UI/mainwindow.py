@@ -1,9 +1,8 @@
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow, QStatusBar, QWidget, QHBoxLayout, QFrame, QLabel, \
+from PyQt5.QtWidgets import QMainWindow, QStatusBar, QWidget, QHBoxLayout, QFrame, QLabel, \
     QFormLayout
-from .vtoolmenu import LeftItem
+from APP.UI.uimods.vtoolmenu import LeftItem
 from .vtoolmenu_info import MENU_INFO
-
 
 
 class Left_Frame_0(QFrame):

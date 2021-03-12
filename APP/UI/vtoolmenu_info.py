@@ -6,7 +6,12 @@ class MENU_INFO():
                 }
 
 # print(MENU_INFO.__menu_info__)
-# print(MENU_INFO.__menu_info__.keys())
+i = []
+print(MENU_INFO.__menu_info__.values())
+for val in MENU_INFO.__menu_info__.values():
+    i.append(val)
+print(i)
+
 # print(list(MENU_INFO.__menu_info__.keys())[0])
 # print(MENU_INFO.__menu_info__[list(MENU_INFO.__menu_info__.keys())[0]])
 # print(MENU_INFO.__menu_info__[MENU_INFO.__menu_info__])

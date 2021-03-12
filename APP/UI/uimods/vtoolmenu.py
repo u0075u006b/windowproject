@@ -1,32 +1,26 @@
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow, QStatusBar, QWidget, QHBoxLayout, QFrame, QLabel, QListWidget, \
-    QFormLayout, QPushButton, QListWidgetItem,QCheckBox
+from PyQt5.QtWidgets import  QWidget, QHBoxLayout, QFrame, QLabel, QListWidget, \
+    QFormLayout, QPushButton, QListWidgetItem
 
 
 class ItemWidget(QWidget):
-
-    def __init__(self, item, factor):
+    def __init__(self, item, qss):
         super(ItemWidget, self).__init__()
         self.item = item
+        self.qss = qss
 
         self.lay = QFormLayout(self)
         self.lay.setContentsMargins(3,5,0,5)
         self.lay.setSpacing(0)
         self.lay.setVerticalSpacing(3)
         self.bt1 = QPushButton("A")
-        self.setStyleSheet('QPushButton {background-color:'
-                           'qlineargradient(spread:pad, x1:0, x2:0, y1:0, y2:1, stop: 0 rgba(220,220,220,255),stop: 0.4 rgba(224,224,224,255),stop: 1 rgba(156,156,156,255));'
-                           'border-color:#808080;border-width:1px;border-style:solid;} '
-                           'QPushButton:pressed {background-color:#C4C2C3;border-color:#808080;border-width:1px;border-style:solid;}')
+        self.setStyleSheet(self.qss)
         self.bt1.setFixedHeight(20)
         self.lay.addWidget(self.bt1)
         # print(self.lay.sizeHint())
         self.bt2 = QPushButton("B")
-        self.setStyleSheet('QPushButton {background-color:'
-                           'qlineargradient(spread:pad, x1:0, x2:0, y1:0, y2:1, stop: 0 rgba(220,220,220,255),stop: 0.4 rgba(224,224,224,255),stop: 1 rgba(156,156,156,255));'
-                           'border-color:#808080;border-width:1px;border-style:solid;} '
-                           'QPushButton:pressed {background-color:#C4C2C3;border-color:#808080;border-width:1px;border-style:solid;}')
+        self.setStyleSheet(self.qss)
         self.bt2.setFixedHeight(20)
         self.lay.addWidget(self.bt2)
         # print(self.lay.sizeHint())
@@ -59,6 +53,8 @@ class TopButton(QPushButton):
 
 
 class LeftItem(QListWidget):
+    __qss = None
+
     def __init__(self,btname,listname):
         super(LeftItem, self).__init__()
         self.btname = btname
@@ -85,8 +81,9 @@ class LeftItem(QListWidget):
         self.setItemWidget(self.sub_item,self.f)
         self.sub_item.setHidden(True)
 
-# class Creat_menuUI():
-#     def __init__(self,factor):
-#         self.factor = factor
-#
-#     def
+    def addstytle(self, s):
+        if s:
+            self.__qss = s
+        else:
+            pass
+
