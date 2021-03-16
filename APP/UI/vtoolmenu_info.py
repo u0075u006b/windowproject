@@ -6,11 +6,20 @@ class MENU_INFO():
                 }
 
 # print(MENU_INFO.__menu_info__)
-i = []
-print(MENU_INFO.__menu_info__.values())
-for val in MENU_INFO.__menu_info__.values():
-    i.append(val)
-print(i)
+l1 = [1,2]
+
+l2 = 0
+
+if bool(l1) and bool(l2):
+    a = [l1,l2]
+    print(a)
+elif bool(l1):
+    a = [l1,None]
+    print(a)
+    print(a[1])
+else:
+    print('all flase')
+
 
 # print(list(MENU_INFO.__menu_info__.keys())[0])
 # print(MENU_INFO.__menu_info__[list(MENU_INFO.__menu_info__.keys())[0]])

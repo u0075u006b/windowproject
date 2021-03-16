@@ -20,9 +20,9 @@ QPushButton#menu_1:pressed
     {
     background-color:#C4C2C3;border-color:#808080;border-width:1px;border-style:solid;
     }
-QPushButton#mods_01
+QQListWidget
     {
-
+    border:0px
     }
 
 

@@ -54,13 +54,16 @@ class TopButton(QPushButton):
 
 class LeftItem(QListWidget):
     __qss = None
+    __iconlist = None
+    __itemper = None
 
     def __init__(self,btname,listname):
         super(LeftItem, self).__init__()
         self.btname = btname
         self.itemlist = listname
-        self.setStyleSheet("border:0px")
+        # self.setStyleSheet("border:0px")
 
+    def c_ui(self):
         self.top = QListWidgetItem(self)
         self.btn = TopButton(self.top,self.btname)
         self.setItemWidget(self.top,self.btn)
@@ -81,9 +84,14 @@ class LeftItem(QListWidget):
         self.setItemWidget(self.sub_item,self.f)
         self.sub_item.setHidden(True)
 
-    def addstytle(self, s):
-        if s:
-            self.__qss = s
-        else:
-            pass
+    def setqss(self,qss):
+        self.__qss = qss
+
+    def seticon(self,icon):
+        self.__iconlist = icon
+
+    def setitemper(self,per):
+        self.__itemper = per
+
+
 
