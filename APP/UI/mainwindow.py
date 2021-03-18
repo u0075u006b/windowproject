@@ -1,8 +1,9 @@
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QStatusBar, QWidget, QHBoxLayout, QFrame, QLabel, \
     QFormLayout
-from APP.UI.uimods.vtoolmenu import LeftItem
 from .vtoolmenu_info import MENU_INFO
+from APP.UI.common import QSSadd
+from .modAPI import DrawerVtMenu
 
 
 class Left_Frame_0(QFrame):
@@ -15,8 +16,11 @@ class Left_Frame_0(QFrame):
         self.setStyleSheet("background-color:rgba(255,255,255,255)")
         box = QFormLayout()
         box.setContentsMargins(0,0,0,0)
-        t_item_0 = LeftItem(MENU_INFO.__menu_info__)
-        box.addRow(t_item_0)
+        _menu = DrawerVtMenu(MENU_INFO.__menu_info__,height_par=23)
+        _menu.addstyle(QSSadd.readqss("./UI/qss/vtoolmenu.qss"))
+        _menu.settopicon("./source/icon/plus1518%26.svg", "./source/icon/minus1518%26.svg")
+        s = _menu.create()
+        box.addRow(s)
         self.setLayout(box)
 
 

@@ -1,9 +1,9 @@
 
-from APP.UI.common import QSSadd
+
 from .uimods.vtoolmenu import *
 
 
-class DrawerVtMenu():
+class DrawerVtMenu:
     """
     1\need BUTTON STR from a dict
     2\need BUTTON height'sSIZEPPOLICY from a int
@@ -14,12 +14,11 @@ class DrawerVtMenu():
     __sub_icon = None
     __ItemWidge_par = {"ItemWidget": [3, 5, 0, 5],"formspacing":0,"formVerticalSpacing":3}
 
-    def __init__(self, _titls, _par):
+    def __init__(self, _titls, height_par=20):
         self.titls = _titls #topname,subnamelist(dict)
-        self.button_par = _par #button height(int)
+        self.button_par = height_par #button height(int)
         self.toplist = []
         self.sublist_l = []
-        self.create()
 
     def addstyle(self, style):
         if style:
@@ -54,8 +53,9 @@ class DrawerVtMenu():
                 pass
 
             menuui.setitemper(self.__ItemWidge_par)
-
+            menuui.setbtheight(self.button_par)
             menuui.c_ui()
+
             return menuui
         else:
             pass

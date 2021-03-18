@@ -5,25 +5,37 @@ from PyQt5.QtWidgets import  QWidget, QHBoxLayout, QFrame, QLabel, QListWidget, 
 
 
 class ItemWidget(QWidget):
-    def __init__(self, item, qss):
+    def __init__(self, item, s_list, qss, par, hgt):
         super(ItemWidget, self).__init__()
         self.item = item
+        self.list_ = s_list
         self.qss = qss
+        self.par = par
+        self.bthgt = hgt
 
         self.lay = QFormLayout(self)
-        self.lay.setContentsMargins(3,5,0,5)
-        self.lay.setSpacing(0)
-        self.lay.setVerticalSpacing(3)
-        self.bt1 = QPushButton("A")
-        self.setStyleSheet(self.qss)
-        self.bt1.setFixedHeight(20)
-        self.lay.addWidget(self.bt1)
-        # print(self.lay.sizeHint())
-        self.bt2 = QPushButton("B")
-        self.setStyleSheet(self.qss)
-        self.bt2.setFixedHeight(20)
-        self.lay.addWidget(self.bt2)
-        # print(self.lay.sizeHint())
+        if "ItemWidget" in self.par.keys() and self.par["ItemWidget"]:
+            mar_par = self.par["ItemWidget"]
+            self.lay.setContentsMargins(mar_par[0],mar_par[1],mar_par[2],mar_par[3])
+        else:
+            pass
+
+        if "formspacing" in self.par.keys() and self.par["formspacing"]:
+            self.lay.setSpacing(self.par["formspacing"])
+        else:
+            pass
+
+        if "formVerticalSpacing" in self.par.keys() and self.par["formVerticalSpacing"]:
+            self.lay.setVerticalSpacing(self.par["formVerticalSpacing"])
+        else:
+            pass
+
+        for _i in range(len(self.list_)):
+            self.bt = QPushButton(self.list_[_i])
+            self.bt.setObjectName("menu_1")
+            self.setStyleSheet(self.qss)
+            self.bt.setFixedHeight(self.bthgt-3)
+            self.lay.addWidget(self.bt)
 
     def resizeEvent(self, event):
         # 解决item的高度问题
@@ -38,13 +50,6 @@ class TopButton(QPushButton):
         self.setCheckable(True) # 设置可选中
         self.setChecked(True)
         self.setText(name)
-        self.setIcon(QIcon("./source/icon/plus1518%26.svg"))
-
-        self.setFixedHeight(24)
-        self.setStyleSheet('QPushButton {background-color:'
-                           'qlineargradient(spread:pad, x1:0, x2:0, y1:0, y2:1, stop: 0 rgba(255,255,255,255),stop: 0.4 rgba(240,240,240,255),stop: 1 rgba(180,180,180,255));'
-                           'border-color:#808080;border-width:1px;border-style:solid;} '
-                           'QPushButton:pressed {background-color:#C4C2C3;border-color:#808080;border-width:1px;border-style:solid;}')
 
     def resizeEvent(self, event):
         # 解决item的高度问题
@@ -56,35 +61,34 @@ class LeftItem(QListWidget):
     __qss = None
     __iconlist = None
     __itemper = None
+    __btheight = None
 
     def __init__(self,btname,listname):
         super(LeftItem, self).__init__()
         self.btname = btname
         self.itemlist = listname
+
         # self.setStyleSheet("border:0px")
 
     def c_ui(self):
-        self.top = QListWidgetItem(self)
-        self.btn = TopButton(self.top,self.btname)
-        self.setItemWidget(self.top,self.btn)
+        for _i in range(len(self.btname)):
+            top_obj = QListWidgetItem(self)
+            btn = TopButton(top_obj, self.btname[_i])
+            btn.setObjectName("menu_0")
+            btn.setIcon(QIcon(self.__iconlist[0][0]))
+            btn.setFixedHeight(self.__btheight)
+            btn.setStyleSheet(self.__qss)
+            self.setItemWidget(top_obj, btn)
+            if self.itemlist[_i]:
+                sub_obj = QListWidgetItem(self)
+                btn.toggled.connect(sub_obj.setHidden)
+                item = ItemWidget(sub_obj, self.itemlist[_i],self.__qss,self.__itemper,self.__btheight)
+                self.setItemWidget(sub_obj, item)
+                sub_obj.setHidden(True)
+            else:
+                pass
 
-        self.sub_item = QListWidgetItem(self)
-        self.btn.toggled.connect(self.sub_item.setHidden)
-        self.f = ItemWidget(self.sub_item, self.itemlist)
-        self.setItemWidget(self.sub_item,self.f)
-        self.sub_item.setHidden(True)
-
-        self.top = QListWidgetItem(self)
-        self.btn = TopButton(self.top,self.btname)
-        self.setItemWidget(self.top,self.btn)
-
-        self.sub_item = QListWidgetItem(self)
-        self.btn.toggled.connect(self.sub_item.setHidden)
-        self.f = ItemWidget(self.sub_item, self.itemlist)
-        self.setItemWidget(self.sub_item,self.f)
-        self.sub_item.setHidden(True)
-
-    def setqss(self,qss):
+    def setqss(self, qss):
         self.__qss = qss
 
     def seticon(self,icon):
@@ -92,6 +96,9 @@ class LeftItem(QListWidget):
 
     def setitemper(self,per):
         self.__itemper = per
+
+    def setbtheight(self,per):
+        self.__btheight = per
 
 
 
