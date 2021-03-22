@@ -67,15 +67,18 @@ class M_window(QMainWindow,QWidget):
             if self.rightwidget.layout() is not None:
                 print(self.rightwidget.layout())
                 print(self.rightwidget.layout().count())
-
+                for i in range(self.rightwidget.layout().count()):
+                    self.rightwidget.layout().itemAt(i).widget().deleteLater()
+                QObjectCleanupHandler().add(self.rightwidget.layout())
                 # for i in range(0,self.rightwidget.layout().count()):
                 #     print(self.rightwidget.layout().itemAt(i).widget())
-                # _la = QVBoxLayout()
-                # for i in range(3):
-                #     tx = QLabel(_str)
-                #     tx.setStyleSheet('color:white;font:bold 50px;')
-                #     _la.addWidget(tx)
-                # self.rightwidget.setLayout(_la)
+                _la = QVBoxLayout()
+                for i in range(2):
+                    tx = QLabel(_str)
+                    tx.setStyleSheet('color:white;font:bold 50px;')
+                    _la.addWidget(tx)
+                self.rightwidget.setLayout(_la)
+                self.rightwidget.update()
             else:
                 print(self.rightwidget.layout())
                 _la = QHBoxLayout()
