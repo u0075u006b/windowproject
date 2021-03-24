@@ -1,7 +1,7 @@
-from PyQt5.QtCore import QSize
+from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import  QWidget, QHBoxLayout, QFrame, QLabel, QListWidget, \
-    QFormLayout, QPushButton, QListWidgetItem
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QFrame, QLabel, QListWidget, \
+    QFormLayout, QPushButton, QListWidgetItem, QCheckBox
 
 
 class ItemWidget(QWidget):
@@ -67,15 +67,18 @@ class LeftItem(QListWidget):
         super(LeftItem, self).__init__()
         self.btname = btname
         self.itemlist = listname
-
-        # self.setStyleSheet("border:0px")
+        self.setContentsMargins(0,0,0,0)
+        self.setStyleSheet("border:0px")
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
 
     def c_ui(self):
+        t_icon_fold = QIcon(self.__iconlist[0][0])
+        t_icon_unfold = QIcon(self.__iconlist[0][1])
         for _i in range(len(self.btname)):
             top_obj = QListWidgetItem(self)
             btn = TopButton(top_obj, self.btname[_i])
             btn.setObjectName("menu_0")
-            btn.setIcon(QIcon(self.__iconlist[0][0]))
+            btn.setIcon(t_icon_fold)
             btn.setFixedHeight(self.__btheight)
             btn.setStyleSheet(self.__qss)
             self.setItemWidget(top_obj, btn)

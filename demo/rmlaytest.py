@@ -70,6 +70,11 @@ class M_window(QMainWindow,QWidget):
                 for i in range(self.rightwidget.layout().count()):
                     self.rightwidget.layout().itemAt(i).widget().deleteLater()
                 QObjectCleanupHandler().add(self.rightwidget.layout())
+                print("------------------------")
+                print(self.rightwidget.layout())
+                s = QObjectCleanupHandler().isEmpty()
+                print(s)
+
                 # for i in range(0,self.rightwidget.layout().count()):
                 #     print(self.rightwidget.layout().itemAt(i).widget())
                 _la = QVBoxLayout()

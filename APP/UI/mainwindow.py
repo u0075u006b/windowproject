@@ -14,6 +14,7 @@ class Left_Frame_0(QFrame):
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Sunken)
         self.setStyleSheet("background-color:rgba(255,255,255,255)")
+        self.setContentsMargins(0,0,0,0)
         box = QFormLayout()
         box.setContentsMargins(0,0,0,0)
         _menu = DrawerVtMenu(MENU_INFO.__menu_info__,height_par=23)
