@@ -72,19 +72,19 @@ class LeftItem(QListWidget):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
 
     def c_ui(self):
-        t_icon_fold = QIcon(self.__iconlist[0][0])
-        t_icon_unfold = QIcon(self.__iconlist[0][1])
+        self.t_icon_fold = QIcon(self.__iconlist[0][0])
+        self.t_icon_unfold = QIcon(self.__iconlist[0][1])
         for _i in range(len(self.btname)):
             top_obj = QListWidgetItem(self)
-            btn = TopButton(top_obj, self.btname[_i])
-            btn.setObjectName("menu_0")
-            btn.setIcon(t_icon_fold)
-            btn.setFixedHeight(self.__btheight)
-            btn.setStyleSheet(self.__qss)
-            self.setItemWidget(top_obj, btn)
+            self.btn = TopButton(top_obj, self.btname[_i])
+            self.btn.setObjectName("menu_0")
+            self.btn.setIcon(self.t_icon_fold)
+            self.btn.setFixedHeight(self.__btheight)
+            self.btn.setStyleSheet(self.__qss)
+            self.setItemWidget(top_obj, self.btn)
             if self.itemlist[_i]:
                 sub_obj = QListWidgetItem(self)
-                btn.toggled.connect(sub_obj.setHidden)
+                self.btn.toggled.connect(sub_obj.setHidden)
                 item = ItemWidget(sub_obj, self.itemlist[_i],self.__qss,self.__itemper,self.__btheight)
                 self.setItemWidget(sub_obj, item)
                 sub_obj.setHidden(True)
