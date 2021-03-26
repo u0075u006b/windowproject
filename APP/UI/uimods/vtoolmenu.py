@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import Qt, QSize, QEvent
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QFrame, QLabel, QListWidget, \
     QFormLayout, QPushButton, QListWidgetItem, QCheckBox
@@ -44,12 +44,24 @@ class ItemWidget(QWidget):
 
 
 class TopButton(QPushButton):
-    def __init__(self, item, name):
+    def __init__(self, item, name,icon_f,icon_uf):
         super(TopButton, self).__init__()
         self.item = item
+        self.icon_f = icon_f
+        self.icon_uf = icon_uf
+        self.setIcon(self.icon_f)
         self.setCheckable(True) # 设置可选中
         self.setChecked(True)
         self.setText(name)
+
+    def event(self, event):
+        if event.type() == QEvent.MouseButtonPress:
+            print(self.isChecked())
+            if self.isChecked():
+                self.setIcon(self.icon_uf)
+            else:
+                self.setIcon(self.icon_f)
+        return super(TopButton, self).event(event)
 
     def resizeEvent(self, event):
         # 解决item的高度问题
@@ -76,9 +88,9 @@ class LeftItem(QListWidget):
         self.t_icon_unfold = QIcon(self.__iconlist[0][1])
         for _i in range(len(self.btname)):
             top_obj = QListWidgetItem(self)
-            self.btn = TopButton(top_obj, self.btname[_i])
+            self.btn = TopButton(top_obj, self.btname[_i],self.t_icon_fold,self.t_icon_unfold)
             self.btn.setObjectName("menu_0")
-            self.btn.setIcon(self.t_icon_fold)
+            # self.btn.setIcon(self.t_icon_fold)
             self.btn.setFixedHeight(self.__btheight)
             self.btn.setStyleSheet(self.__qss)
             self.setItemWidget(top_obj, self.btn)

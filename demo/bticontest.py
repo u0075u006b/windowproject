@@ -7,7 +7,6 @@ from qtpy import QtCore
 
 
 class Qbutton(QPushButton,QApplication):
-    idType = QEvent.registerEventType()
 
     def __init__(self):
         super(Qbutton, self).__init__()
@@ -15,10 +14,16 @@ class Qbutton(QPushButton,QApplication):
         self.setFixedSize(120, 20)
         self.setIcon(QIcon("./icon/plus1518%26.svg"))
         self.setCheckable(True)
-        self.setChecked(True)
-        # self.installEventFilter(self)
+        # self.setChecked(True)
         # self.installEventFilter(self)
 
+    def event(self, event):
+        if event.type() == QEvent.DynamicPropertyChange:
+            if self.isChecked():
+                self.setIcon(QIcon("./icon/minus1518%26.svg"))
+            else:
+                self.setIcon(QIcon("./icon/plus1518%26.svg"))
+        return super(Qbutton,self).event(event)
     # def eventFilter(self, obj, event):
     #     print(event)
     # # def event(self, event):
@@ -37,28 +42,30 @@ class UI(QWidget):
     def ui(self):
         box = QVBoxLayout()
         self.bt_0 = Qbutton()
-        self.bt_0.toggled.connect(lambda : self.p(self.bt_0))
-        self.bt_0.toggled.connect(lambda : self.p2(self.bt_0))
         box.addWidget(self.bt_0)
+        lab = QLabel(self)
+        self.bt_0.toggled.connect(lab.setHidden)
+        lab.setText("这是文本一")
+        lab.resize(200, 90)
+        lab.setStyleSheet("background-color:#C4C2C3;border-color:#808080;border-width:1px;border-style:solid;")
+        box.addWidget(lab)
         self.bt_1 = Qbutton()
-        self.bt_1.toggled.connect(lambda : self.p(self.bt_1))
-        self.bt_1.toggled.connect(lambda : self.p2(self.bt_1))
         box.addWidget(self.bt_1)
         lab = QLabel(self)
-        lab.setText("这是文本")
+        self.bt_1.toggled.connect(lab.setHidden)
+        lab.setText("这是文本二")
         lab.resize(200,90)
         lab.setStyleSheet("background-color:#C4C2C3;border-color:#808080;border-width:1px;border-style:solid;")
         box.addWidget(lab)
         self.setLayout(box)
 
-    def p(self,b):
-        print(b.isChecked())
+
     #
-    def p2(self,b):
-        if b.isChecked():
-            b.setIcon(QIcon("./icon/plus1518%26.svg"))
-        else:
-            b.setIcon(QIcon("./icon/minus1518%26.svg"))
+    # def p2(self,b):
+    #     if b.isChecked():
+    #         b.setIcon(QIcon("./icon/plus1518%26.svg"))
+    #     else:
+    #         b.setIcon(QIcon("./icon/minus1518%26.svg"))
 
 
 if __name__ == "__main__":
