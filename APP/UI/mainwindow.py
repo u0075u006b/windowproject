@@ -5,13 +5,12 @@ from PyQt5.QtWidgets import QMainWindow, QStatusBar, QWidget, QHBoxLayout, QFram
 from .vtoolmenu_info import MENU_INFO
 from APP.UI.common import QSSadd
 from .modAPI import DrawerVtMenu
-
+from . import upsingle
 
 gbqss = QSSadd.readqss("./UI/qss/gb.qss")
 
 
 class Left_Frame_0(QFrame):
-
     def __init__(self):
         super(Left_Frame_0, self).__init__()
         self.setObjectName("l_frame")
@@ -30,6 +29,9 @@ class Left_Frame_0(QFrame):
         box.addRow(s)
         self.setLayout(box)
 
+    # def fun(self, str_):
+    #     print("fun is:")
+    #     print(str_)
 
 class Right_Frame_0(QFrame):
     def __init__(self):
@@ -65,6 +67,12 @@ class M_window(QMainWindow):
         self.central_widget.setLayout(box_0)
         self.setstatus_bar()
 
+
+    def fun(self):
+        print("aa")
+
     def setstatus_bar(self):
         self.sta_bar.addWidget(QLabel("程序运行中    "))
         self.setStatusBar(self.sta_bar)
+
+

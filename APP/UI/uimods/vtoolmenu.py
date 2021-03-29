@@ -2,6 +2,7 @@ from PyQt5.QtCore import Qt, QSize, QEvent, pyqtSignal
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListWidget, \
     QFormLayout, QPushButton, QListWidgetItem
+from APP.UI import upsingle
 
 
 class ItemWidget(QWidget):
@@ -9,7 +10,6 @@ class ItemWidget(QWidget):
 
     def __init__(self, item, s_list, qss, par, hgt):
         super(ItemWidget, self).__init__()
-        self.update_.connect(self.fun)
         self.item = item
         self.list_ = s_list
         self.qss = qss
@@ -45,9 +45,9 @@ class ItemWidget(QWidget):
         txt = self.sender().text()  # 获取发送信号的控件文本
         self.update_.emit(txt)
 
-    def fun(self,str_):
-        print("fun is:")
-        print(str_)
+    # def fun(self,str_):
+    #     print("fun is:")
+    #     print(str_)
 
     def resizeEvent(self, event):
         # 解决item的高度问题

@@ -58,4 +58,3 @@ class DrawerVtMenu:
             return menuui
         else:
             pass
-
