@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QStatusBar, QWidget, QHBoxLayout, QFrame, QLabel, \
     QFormLayout
@@ -6,18 +7,23 @@ from APP.UI.common import QSSadd
 from .modAPI import DrawerVtMenu
 
 
+gbqss = QSSadd.readqss("./UI/qss/gb.qss")
+
+
 class Left_Frame_0(QFrame):
+
     def __init__(self):
         super(Left_Frame_0, self).__init__()
+        self.setObjectName("l_frame")
         self.setMaximumWidth(150)
         self.setMinimumWidth(150)
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Sunken)
-        self.setStyleSheet("background-color:rgba(255,255,255,255)")
-        self.setContentsMargins(0,0,0,0)
+        self.setStyleSheet(gbqss)
+        self.setContentsMargins(0, 0, 0, 0)
         box = QFormLayout()
-        box.setContentsMargins(0,0,0,0)
-        _menu = DrawerVtMenu(MENU_INFO.__menu_info__,height_par=23)
+        box.setContentsMargins(0, 0, 0, 0)
+        _menu = DrawerVtMenu(MENU_INFO.__menu_info__, height_par=23)
         _menu.addstyle(QSSadd.readqss("./UI/qss/vtoolmenu.qss"))
         _menu.settopicon("./source/icon/plus1518%26.svg", "./source/icon/minus1518%26.svg")
         s = _menu.create()
@@ -28,9 +34,11 @@ class Left_Frame_0(QFrame):
 class Right_Frame_0(QFrame):
     def __init__(self):
         super(Right_Frame_0, self).__init__()
+        self.setObjectName("r_frame")
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Sunken)
-        self.setStyleSheet("background-color:rgba(200,200,200,255)")
+        self.setStyleSheet(gbqss)
+
 
 class M_window(QMainWindow):
     appname = "ANA SYS"

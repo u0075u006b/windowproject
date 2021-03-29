@@ -1,12 +1,15 @@
-from PyQt5.QtCore import Qt, QSize, QEvent
+from PyQt5.QtCore import Qt, QSize, QEvent, pyqtSignal
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QFrame, QLabel, QListWidget, \
-    QFormLayout, QPushButton, QListWidgetItem, QCheckBox
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListWidget, \
+    QFormLayout, QPushButton, QListWidgetItem
 
 
 class ItemWidget(QWidget):
+    update_ = pyqtSignal(str)
+
     def __init__(self, item, s_list, qss, par, hgt):
         super(ItemWidget, self).__init__()
+        self.update_.connect(self.fun)
         self.item = item
         self.list_ = s_list
         self.qss = qss
@@ -33,9 +36,18 @@ class ItemWidget(QWidget):
         for _i in range(len(self.list_)):
             self.bt = QPushButton(self.list_[_i])
             self.bt.setObjectName("menu_1")
+            self.bt.clicked.connect(self.onclick)
             self.setStyleSheet(self.qss)
             self.bt.setFixedHeight(self.bthgt-3)
             self.lay.addWidget(self.bt)
+
+    def onclick(self):
+        txt = self.sender().text()  # 获取发送信号的控件文本
+        self.update_.emit(txt)
+
+    def fun(self,str_):
+        print("fun is:")
+        print(str_)
 
     def resizeEvent(self, event):
         # 解决item的高度问题
@@ -56,7 +68,6 @@ class TopButton(QPushButton):
 
     def event(self, event):
         if event.type() == QEvent.MouseButtonPress:
-            print(self.isChecked())
             if self.isChecked():
                 self.setIcon(self.icon_uf)
             else:
