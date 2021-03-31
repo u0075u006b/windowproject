@@ -22,11 +22,11 @@ class Left_Frame_0(QFrame):
         self.setContentsMargins(0, 0, 0, 0)
         box = QFormLayout()
         box.setContentsMargins(0, 0, 0, 0)
-        _menu = DrawerVtMenu(MENU_INFO.__menu_info__, height_par=23)
-        _menu.addstyle(QSSadd.readqss("./UI/qss/vtoolmenu.qss"))
-        _menu.settopicon("./source/icon/plus1518%26.svg", "./source/icon/minus1518%26.svg")
-        s = _menu.create()
-        box.addRow(s)
+        self._menu = DrawerVtMenu(MENU_INFO.__menu_info__, height_par=23)
+        self._menu.addstyle(QSSadd.readqss("./UI/qss/vtoolmenu.qss"))
+        self._menu.settopicon("./source/icon/plus1518%26.svg", "./source/icon/minus1518%26.svg")
+        self.s = self._menu.create()
+        box.addRow(self.s)
         self.setLayout(box)
 
     # def fun(self, str_):
@@ -58,18 +58,18 @@ class M_window(QMainWindow):
         self.setCentralWidget(self.central_widget)
         box_0 = QHBoxLayout()
         box_0.setContentsMargins(0,0,0,0)
-        left_frame = Left_Frame_0()
-        right_frame = Right_Frame_0()
+        self.left_frame = Left_Frame_0()
+        self.right_frame = Right_Frame_0()
 
-        box_0.addWidget(left_frame)
-        box_0.addWidget(right_frame)
+        box_0.addWidget(self.left_frame)
+        box_0.addWidget(self.right_frame)
 
         self.central_widget.setLayout(box_0)
         self.setstatus_bar()
+        self.left_frame.s.itemc.update_.connect(self.fun)
 
-
-    def fun(self):
-        print("aa")
+    def fun(self,str_):
+        print(str_)
 
     def setstatus_bar(self):
         self.sta_bar.addWidget(QLabel("程序运行中    "))

@@ -108,8 +108,8 @@ class LeftItem(QListWidget):
             if self.itemlist[_i]:
                 sub_obj = QListWidgetItem(self)
                 self.btn.toggled.connect(sub_obj.setHidden)
-                item = ItemWidget(sub_obj, self.itemlist[_i],self.__qss,self.__itemper,self.__btheight)
-                self.setItemWidget(sub_obj, item)
+                self.itemc = ItemWidget(sub_obj, self.itemlist[_i],self.__qss,self.__itemper,self.__btheight)
+                self.setItemWidget(sub_obj, self.itemc)
                 sub_obj.setHidden(True)
             else:
                 pass
