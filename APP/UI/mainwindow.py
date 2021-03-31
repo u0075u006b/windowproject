@@ -40,6 +40,11 @@ class Right_Frame_0(QFrame):
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Sunken)
         self.setStyleSheet(gbqss)
+        box = QFormLayout()
+        self.lab = QLabel()
+        self.lab.setText("初始")
+        box.addWidget(self.lab)
+        self.setLayout(box)
 
 
 class M_window(QMainWindow):
@@ -66,10 +71,13 @@ class M_window(QMainWindow):
 
         self.central_widget.setLayout(box_0)
         self.setstatus_bar()
-        self.left_frame.s.itemc.update_.connect(self.fun)
+        self.left_frame.s.item_0.update_.connect(self.fun)
+        self.left_frame.s.item_1.update_.connect(self.fun)
+        self.left_frame.s.item_2.update_.connect(self.fun)
 
     def fun(self,str_):
         print(str_)
+        self.right_frame.lab.setText(str_)
 
     def setstatus_bar(self):
         self.sta_bar.addWidget(QLabel("程序运行中    "))

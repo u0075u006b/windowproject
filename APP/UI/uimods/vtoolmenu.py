@@ -97,22 +97,70 @@ class LeftItem(QListWidget):
     def c_ui(self):
         self.t_icon_fold = QIcon(self.__iconlist[0][0])
         self.t_icon_unfold = QIcon(self.__iconlist[0][1])
-        for _i in range(len(self.btname)):
-            top_obj = QListWidgetItem(self)
-            self.btn = TopButton(top_obj, self.btname[_i],self.t_icon_fold,self.t_icon_unfold)
-            self.btn.setObjectName("menu_0")
-            # self.btn.setIcon(self.t_icon_fold)
-            self.btn.setFixedHeight(self.__btheight)
-            self.btn.setStyleSheet(self.__qss)
-            self.setItemWidget(top_obj, self.btn)
-            if self.itemlist[_i]:
-                sub_obj = QListWidgetItem(self)
-                self.btn.toggled.connect(sub_obj.setHidden)
-                self.itemc = ItemWidget(sub_obj, self.itemlist[_i],self.__qss,self.__itemper,self.__btheight)
-                self.setItemWidget(sub_obj, self.itemc)
-                sub_obj.setHidden(True)
-            else:
-                pass
+
+        self.top_obj_0 = QListWidgetItem(self)
+        self.btn_0 = TopButton(self.top_obj_0, self.btname[0],self.t_icon_fold,self.t_icon_unfold)
+        self.btn_0.setObjectName("menu_0")
+        self.btn_0.setFixedHeight(self.__btheight)
+        self.btn_0.setStyleSheet(self.__qss)
+        self.setItemWidget(self.top_obj_0, self.btn_0)
+        if self.itemlist[0]:
+            self.sub_obj = QListWidgetItem(self)
+            self.btn_0.toggled.connect(self.sub_obj.setHidden)
+            self.item_0 = ItemWidget(self.sub_obj, self.itemlist[0],self.__qss,self.__itemper,self.__btheight)
+            self.setItemWidget(self.sub_obj, self.item_0)
+            self.sub_obj.setHidden(True)
+        else:
+            pass
+
+        self.top_obj_1 = QListWidgetItem(self)
+        self.btn_1 = TopButton(self.top_obj_1, self.btname[1],self.t_icon_fold,self.t_icon_unfold)
+        self.btn_1.setObjectName("menu_0")
+        self.btn_1.setFixedHeight(self.__btheight)
+        self.btn_1.setStyleSheet(self.__qss)
+        self.setItemWidget(self.top_obj_1, self.btn_1)
+        if self.itemlist[1]:
+            self.sub_obj = QListWidgetItem(self)
+            self.btn_1.toggled.connect(self.sub_obj.setHidden)
+            self.item_1 = ItemWidget(self.sub_obj, self.itemlist[1],self.__qss,self.__itemper,self.__btheight)
+            self.setItemWidget(self.sub_obj, self.item_1)
+            self.sub_obj.setHidden(True)
+        else:
+            pass
+
+        self.top_obj_2 = QListWidgetItem(self)
+        self.btn_2 = TopButton(self.top_obj_2, self.btname[2],self.t_icon_fold,self.t_icon_unfold)
+        self.btn_2.setObjectName("menu_0")
+        self.btn_2.setFixedHeight(self.__btheight)
+        self.btn_2.setStyleSheet(self.__qss)
+        self.setItemWidget(self.top_obj_2, self.btn_2)
+        if self.itemlist[2]:
+            self.sub_obj = QListWidgetItem(self)
+            self.btn_2.toggled.connect(self.sub_obj.setHidden)
+            self.item_2 = ItemWidget(self.sub_obj, self.itemlist[2],self.__qss,self.__itemper,self.__btheight)
+            self.setItemWidget(self.sub_obj, self.item_2)
+            self.sub_obj.setHidden(True)
+        else:
+            pass
+
+
+
+        # for _i in range(len(self.btname)):
+            # top_obj = QListWidgetItem(self)
+            # self.btn = TopButton(top_obj, self.btname[_i],self.t_icon_fold,self.t_icon_unfold)
+            # self.btn.setObjectName("menu_0")
+            # # self.btn.setIcon(self.t_icon_fold)
+            # self.btn.setFixedHeight(self.__btheight)
+            # self.btn.setStyleSheet(self.__qss)
+            # self.setItemWidget(top_obj, self.btn)
+            # if self.itemlist[_i]:
+            #     sub_obj = QListWidgetItem(self)
+            #     self.btn.toggled.connect(sub_obj.setHidden)
+            #     self.itemc = ItemWidget(sub_obj, self.itemlist[_i],self.__qss,self.__itemper,self.__btheight)
+            #     self.setItemWidget(sub_obj, self.itemc)
+            #     sub_obj.setHidden(True)
+            # else:
+            #     pass
 
     def setqss(self, qss):
         self.__qss = qss
