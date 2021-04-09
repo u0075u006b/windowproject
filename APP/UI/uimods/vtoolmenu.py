@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt, QSize, QEvent, pyqtSignal
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListWidget, \
     QFormLayout, QPushButton, QListWidgetItem
 from APP.UI import upsingle
@@ -61,18 +61,13 @@ class TopButton(QPushButton):
         self.item = item
         self.icon_f = icon_f
         self.icon_uf = icon_uf
-        self.setIcon(self.icon_f)
         self.setCheckable(True) # 设置可选中
         self.setChecked(True)
         self.setText(name)
-
-    def event(self, event):
-        if event.type() == QEvent.MouseButtonPress:
-            if self.isChecked():
-                self.setIcon(self.icon_uf)
-            else:
-                self.setIcon(self.icon_f)
-        return super(TopButton, self).event(event)
+        __icon = QIcon()
+        __icon.addPixmap(QPixmap(self.icon_f), mode=QIcon.Normal, state=QIcon.On)
+        __icon.addPixmap(QPixmap(self.icon_uf), mode=QIcon.Normal, state=QIcon.Off)
+        self.setIcon(__icon)
 
     def resizeEvent(self, event):
         # 解决item的高度问题
@@ -95,8 +90,8 @@ class LeftItem(QListWidget):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
 
     def c_ui(self):
-        self.t_icon_fold = QIcon(self.__iconlist[0][0])
-        self.t_icon_unfold = QIcon(self.__iconlist[0][1])
+        self.t_icon_fold = self.__iconlist[0][0]
+        self.t_icon_unfold = self.__iconlist[0][1]
 
         self.top_obj_0 = QListWidgetItem(self)
         self.btn_0 = TopButton(self.top_obj_0, self.btname[0],self.t_icon_fold,self.t_icon_unfold)

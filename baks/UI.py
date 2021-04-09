@@ -17,3 +17,18 @@ vtoolmenu.py create object loop
 #     sub_obj.setHidden(True)
 # else:
 #     pass
+
+
+"""
+event icon change
+"""
+
+# class button:
+#     ...
+# def event(self, event):
+#     if event.type() == QEvent.MouseButtonPress:
+#         if self.isChecked():
+#             self.setIcon(self.icon_uf)
+#         else:
+#             self.setIcon(self.icon_f)
+#     return super(TopButton, self).event(event)

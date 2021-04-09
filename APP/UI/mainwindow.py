@@ -46,6 +46,20 @@ class Right_Frame_0(QFrame):
         box.addWidget(self.lab)
         self.setLayout(box)
 
+class Rside_Frame_0(QFrame):
+    def __init__(self):
+        super(Rside_Frame_0, self).__init__()
+        self.setObjectName("rside_frame")
+        self.setMaximumWidth(300)
+        self.setMinimumWidth(300)
+        self.setFrameShape(QFrame.Box)
+        self.setFrameShadow(QFrame.Sunken)
+        self.setStyleSheet(gbqss)
+        # box = QFormLayout()
+        # self.lab = QLabel()
+        # self.lab.setText("初始")
+        # box.addWidget(self.lab)
+        # self.setLayout(box)
 
 class M_window(QMainWindow):
     appname = "ANA SYS"
@@ -54,6 +68,9 @@ class M_window(QMainWindow):
         super(M_window, self).__init__()
         self.central_widget = QWidget()
         self.sta_bar = QStatusBar()
+        self.left_frame = Left_Frame_0()
+        self.right_frame = Right_Frame_0()
+        self.rside_frame = Rside_Frame_0()
         self.mainUI()
 
     def mainUI(self):
@@ -63,14 +80,14 @@ class M_window(QMainWindow):
         self.setCentralWidget(self.central_widget)
         box_0 = QHBoxLayout()
         box_0.setContentsMargins(0,0,0,0)
-        self.left_frame = Left_Frame_0()
-        self.right_frame = Right_Frame_0()
 
         box_0.addWidget(self.left_frame)
         box_0.addWidget(self.right_frame)
+        box_0.addWidget(self.rside_frame)
 
         self.central_widget.setLayout(box_0)
         self.setstatus_bar()
+
         self.left_frame.s.item_0.update_.connect(self.fun)
         self.left_frame.s.item_1.update_.connect(self.fun)
         self.left_frame.s.item_2.update_.connect(self.fun)
