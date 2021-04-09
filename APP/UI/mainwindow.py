@@ -56,6 +56,8 @@ class Rside_Frame_0(QFrame):
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Sunken)
         self.setStyleSheet(gbqss)
+
+
         # _box = QFormLayout(self)
         # _box.setContentsMargins(0,0,0,0)
         # _box.setSpacing(0)
