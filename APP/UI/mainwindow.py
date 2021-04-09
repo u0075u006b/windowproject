@@ -46,6 +46,7 @@ class Right_Frame_0(QFrame):
         box.addWidget(self.lab)
         self.setLayout(box)
 
+
 class Rside_Frame_0(QFrame):
     def __init__(self):
         super(Rside_Frame_0, self).__init__()
@@ -55,11 +56,7 @@ class Rside_Frame_0(QFrame):
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Sunken)
         self.setStyleSheet(gbqss)
-        # box = QFormLayout()
-        # self.lab = QLabel()
-        # self.lab.setText("初始")
-        # box.addWidget(self.lab)
-        # self.setLayout(box)
+
 
 class M_window(QMainWindow):
     appname = "ANA SYS"
