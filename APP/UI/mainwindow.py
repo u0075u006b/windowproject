@@ -1,7 +1,7 @@
 from PyQt5.QtCore import pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMainWindow, QStatusBar, QWidget, QHBoxLayout, QFrame, QLabel, \
-    QFormLayout
+from PyQt5.QtWidgets import QMainWindow, QStatusBar, QWidget, QHBoxLayout, QVBoxLayout, QFrame, QLabel, \
+    QFormLayout, QPushButton
 from .vtoolmenu_info import MENU_INFO
 from APP.UI.common import QSSadd
 from .modAPI import DrawerVtMenu
@@ -56,6 +56,37 @@ class Rside_Frame_0(QFrame):
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Sunken)
         self.setStyleSheet(gbqss)
+        # _box = QFormLayout(self)
+        # _box.setContentsMargins(0,0,0,0)
+        # _box.setSpacing(0)
+        # self.wd = QPushButton()
+        # self.wd.setCheckable(True)
+        # self.wd.setChecked(True)
+        # self.wd.setFixedHeight(20)
+        # self.wd.setText("ceshi")
+        # _box.addRow(self.wd)
+        # self.s_obj = QLabel()
+        #
+        # self.s_obj.resize(250,250)
+        # self.s_obj.setText("zjedwodasbg,wondbueo\n,woidwho,\nweodeda!!!")
+        # self.s_obj.setHidden(True)
+        # _box.addRow(self.s_obj)
+        # self.wd.toggled.connect(self.s_obj.setHidden)
+        #
+        # self.wd = QPushButton()
+        # self.wd.setCheckable(True)
+        # self.wd.setFixedHeight(20)
+        # self.wd.setText("ceshi")
+        # _box.addRow(self.wd)
+        # self.s_obj = QLabel()
+        #
+        # self.s_obj.resize(250,250)
+        # self.s_obj.setText("zjedwodasbg,wondbueo\n,woidwho,\nweodeda!!!")
+        # self.s_obj.setHidden(True)
+        # _box.addRow(self.s_obj)
+        # self.wd.toggled.connect(self.s_obj.setHidden)
+        #
+        # self.setLayout(_box)
 
 
 class M_window(QMainWindow):
