@@ -10,16 +10,17 @@ class ThreadOne(QThread):
 
     def __init__(self):
         super(ThreadOne, self).__init__()
+        self.th_on = True
 
     def run(self):
         f = 30
         self.textnum = 0
-        while f >0 :
+        while f >0 and self.th_on:
             f = f -1
             self.textnum += 1
             self.textstr = str(self.textnum)
             self.siem(self.textstr)
-            time.sleep(0.5)
+            self.msleep(500)
 
     def siem(self,str):
         self.s1.emit(str)
@@ -32,6 +33,7 @@ class UI(QWidget):
         self._connect2 = QTextBrowser(self)
         self.bt1 = QPushButton(self)
         self.bt2 = QPushButton(self)
+        self.bt3 = QPushButton(self)
         self.t1 = ThreadOne()
         self.ui()
 
@@ -42,6 +44,9 @@ class UI(QWidget):
         self.bt2.setFixedSize(80,25)
         self.bt2.setText("STOP")
         self.bt2.move(0,27)
+        self.bt3.setFixedSize(80,25)
+        self.bt3.setText("PAUSE")
+        self.bt3.move(0,54)
         self._connect1.setFixedSize(200,170)
         self._connect1.move(90,0)
         self._connect1.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -51,18 +56,27 @@ class UI(QWidget):
         self._connect2.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
 
         self.bt1.clicked.connect(self.t1run)
-        self.bt2.clicked.connect(self.t1end)
+        self.bt2.clicked.connect(self.t1stop)
+        self.bt3.clicked.connect(self.t1pause)
 
         self.t1.s1.connect(self.addtext)
+        self.t1.started.connect(lambda :print("启动了"))
+        self.t1.finished.connect(lambda: print("结束了"))
 
     def t1run(self):
         print("1:",self.t1.isRunning())
+        self.t1.th_on = True
         self.t1.start()
         print("2:",self.t1.isRunning())
         print(int(self.t1.currentThreadId()))
 
-    def t1end(self):
-        self.t1.quit()
+    def t1pause(self):
+        self.t1.awit()
+        print("t1pause:", self.t1.isRunning())
+
+    def t1stop(self):
+        self.t1.th_on = False
+        self.t1.exit(0)
         print("t1end:",self.t1.isRunning())
 
     def addtext(self,_str):
