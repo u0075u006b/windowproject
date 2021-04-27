@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt, QSize, QThread
+from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal
 from PyQt5.QtWidgets import *
 
 class DataS:
@@ -12,6 +12,8 @@ class DataS:
 
 
 class Qthrun(QThread):
+    s1 = pyqtSignal(str)
+
     def __init__(self):
         super(Qthrun, self).__init__()
         # self.dic = DataS.dic1
@@ -20,8 +22,12 @@ class Qthrun(QThread):
     def run(self):
         while self.on_flag is True:
             print("on_flag %s" % self.on_flag)
+            self.sld = QSlider()
+            self.sld.valueChanged()
             self.sleep(1)
 
+    def p(self):
+        print(self.on_flag)
 
 
 class Qwin(QWidget):
