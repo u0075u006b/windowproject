@@ -1,6 +1,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
+import time
 
 
 class Thread(QThread):
@@ -107,9 +108,11 @@ class MyDialog(QDialog):
         self.thread.cancel()
 
 
+
 if __name__ == "__main__":
     # qt程序
     app = QApplication(sys.argv)
     dialog = MyDialog()
     dialog.show()
+
     sys.exit(app.exec_())

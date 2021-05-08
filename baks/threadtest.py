@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys
-import time
 
 
 class ThreadOne(QThread):
@@ -11,6 +10,8 @@ class ThreadOne(QThread):
     def __init__(self):
         super(ThreadOne, self).__init__()
         self.th_on = True
+        self.cond = QWaitCondition()
+        self.mutex = QMutex()
 
     def run(self):
         f = 30
@@ -82,6 +83,8 @@ class UI(QWidget):
     def addtext(self,_str):
         self._connect1.append(_str)
         self._connect2.append(str(self.t1.isRunning()))
+
+
 
 
 
