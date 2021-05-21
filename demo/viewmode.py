@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal
+from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QTimer
 from PyQt5.QtWidgets import *
 
 
@@ -76,10 +76,12 @@ class DStreeView(QTreeWidget):
         super(DStreeView, self).__init__()
         self.cow = self.datalist
         self.widthsize = par
-        print("widthsize is %s " % self.widthsize)
+        # print("widthsize is %s " % self.widthsize)
         self.setContentsMargins(0,0,0,0)
-        self.setFrameShape(QFrame.Box)
-        self.setFrameShadow(QFrame.Plain)
+        self.setFrameShape(QFrame.WinPanel)
+        self.setFrameShadow(QFrame.Sunken)
+        self.setStyleSheet("border:1px solid gray")
+        # self.setFrameStyle("border-top: 3px solid gray;")
         self.setColumnCount(4)
         self.setColumnWidth(0,self.widthsize/4)
         self.setColumnWidth(1,self.widthsize/4)
@@ -87,7 +89,10 @@ class DStreeView(QTreeWidget):
         self.setColumnWidth(3,self.widthsize/4)
 
         self.setHeaderLabels(["a","b","c","d"])
-        self.setIconSize(QSize(8,8))
+        self.header().setDefaultAlignment(Qt.AlignCenter)
+        self.header().setFixedHeight(23)
+        self.header().setStyleSheet("border-width:0px 0px 1px 0px")
+        self.setIconSize(QSize(8, 8))
         fsize = QFont()
         fsize.setPointSize(9)
         for i in range(len(self.cow)):
@@ -103,7 +108,7 @@ class DStreeView(QTreeWidget):
             root.setText(1, DStreeView.datalist[i][1])
             root.setText(2, DStreeView.datalist[i][2])
             root.setText(3, DStreeView.datalist[i][3])
-        print("TREE width %s" % self.sizeHint().width())
+        # print("TREE width %s" % self.sizeHint().width())
 
 
 class Viewone(QWidget):
@@ -128,7 +133,7 @@ class CustomizeFrame(QFrame):
     def __init__(self):
         super(CustomizeFrame, self).__init__()
         self.setFixedWidth(200)
-        print("frame width %s" % self.size().width())
+        # print("frame width %s" % self.size().width())
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Raised)
         self.setStyleSheet("background-color:white;border-width:0px;")
@@ -161,6 +166,13 @@ class MainWin(QMainWindow):
         self.box_central.setContentsMargins(0, 0, 2, 0)
         self.central_widget.setLayout(self.box_central)
 
+    def viewrefresh(self):
+        self.time = QTimer(self)
+
+
+
+
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -171,4 +183,5 @@ if __name__ == "__main__":
     # f.setFamily("YouYuan")
     # print(f.family())
     # print(app.font().family())
+
     sys.exit(app.exec_())
