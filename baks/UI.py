@@ -32,3 +32,23 @@ event icon change
 #         else:
 #             self.setIcon(self.icon_f)
 #     return super(TopButton, self).event(event)
+
+"""
+QTreewidget
+"""
+
+# def traverse(self):
+#     """遍历"""
+#     iterator = QTreeWidgetItemIterator(self)
+#
+#     while iterator.value():
+#         item = iterator.value()
+#         columnCount = item.columnCount()
+#         for i in range(columnCount):
+#             text = item.text(i)
+#             if i == columnCount - 1:
+#                 print(text)
+#                 print(type(text))
+#             else:
+#                 print(text, end=' ')
+#         iterator.__iadd__(1)

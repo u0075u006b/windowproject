@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QTimer
+from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QTimer, QTimerEvent
 from PyQt5.QtWidgets import *
 
 
@@ -69,8 +69,13 @@ class DataS:
 #     def __init__(self):
 #         super(ParenContainer, self).__init__()
 #         self.resize()
+
+
+
 class DStreeView(QTreeWidget):
-    datalist = [['1','192.168.0.1','200MB','3K'],['2','192.168.0.2','300MB','5M'],['3','192.168.0.3','400MB','8T']]
+    datalist = [['远程','192.168.0.1','200MB','3K'],['本地','192.168.0.2','300MB','5M'],['临时','192.168.0.3','400MB','8T']]
+    testlist = ['400MB','500MB','600MB','700MB','800MB','900MB','1000MB','1100MB']
+    testcount = 0
 
     def __init__(self, par):
         super(DStreeView, self).__init__()
@@ -93,14 +98,32 @@ class DStreeView(QTreeWidget):
         self.header().setFixedHeight(23)
         self.header().setStyleSheet("border-width:0px 0px 1px 0px")
         self.setIconSize(QSize(8, 8))
-        fsize = QFont()
-        fsize.setPointSize(9)
+        self.fsize = QFont()
+        self.fsize.setPointSize(9)
+        self.additem()
+        self.t1 = self.startTimer(2000)
+
+    # def traverse(self,data):
+    #     for i in range(self.topLevelItemCount()):
+    #         if self.topLevelItem(i).text(0) == "本地":
+    #             if self.topLevelItem(2).text(2) != data:
+    #                 self.topLevelItem(2).setText(2,data)
+    #                 if DStreeView.testcount == 7:
+    #                     DStreeView.testcount = 0
+    #                 else:
+    #                     DStreeView.testcount += 1
+    #             else:
+    #                 pass
+    #         else:
+    #             pass
+
+    def additem(self):
         for i in range(len(self.cow)):
             root = QTreeWidgetItem(self)
-            root.setFont(0,fsize)
-            root.setFont(1, fsize)
-            root.setFont(2, fsize)
-            root.setFont(3, fsize)
+            root.setFont(0,self.fsize)
+            root.setFont(1, self.fsize)
+            root.setFont(2, self.fsize)
+            root.setFont(3, self.fsize)
             root.setChildIndicatorPolicy(0)
             root.setText(0, DStreeView.datalist[i][0])
             root_icon = QIcon(QApplication.style().standardIcon(0))
@@ -109,6 +132,27 @@ class DStreeView(QTreeWidget):
             root.setText(2, DStreeView.datalist[i][2])
             root.setText(3, DStreeView.datalist[i][3])
         # print("TREE width %s" % self.sizeHint().width())
+
+    def timerEvent(self, e=QTimerEvent):
+        if e.timerId() == self.t1:
+            print("aaa")
+
+            data = DStreeView.testlist[DStreeView.testcount]
+            print(data)
+            for i in range(self.topLevelItemCount()):
+                if self.topLevelItem(i).text(0) == "本地":
+                    if self.topLevelItem(i).text(2) != data:
+                        self.topLevelItem(i).setText(2, data)
+                    else:
+                        pass
+                else:
+                    pass
+            if DStreeView.testcount < 7:
+                DStreeView.testcount += 1
+            else:
+                DStreeView.testcount = 0
+
+
 
 
 class Viewone(QWidget):
@@ -165,13 +209,9 @@ class MainWin(QMainWindow):
 
         self.box_central.setContentsMargins(0, 0, 2, 0)
         self.central_widget.setLayout(self.box_central)
-
+    #
     def viewrefresh(self):
         self.time = QTimer(self)
-
-
-
-
 
 
 if __name__ == "__main__":
