@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QTimer, QTimerEvent
+from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QTimer, QTimerEvent, QWaitCondition, QMutex
 from PyQt5.QtWidgets import *
 
 
@@ -85,7 +85,7 @@ class DStreeView(QTreeWidget):
         self.setContentsMargins(0,0,0,0)
         self.setFrameShape(QFrame.WinPanel)
         self.setFrameShadow(QFrame.Sunken)
-        self.setStyleSheet("border:1px solid gray")
+        self.setStyleSheet("background-color:#FFFFF0;border:0px solid gray;border-top:1px solid gray;")
         # self.setFrameStyle("border-top: 3px solid gray;")
         self.setColumnCount(4)
         self.setColumnWidth(0,self.widthsize/4)
@@ -95,13 +95,13 @@ class DStreeView(QTreeWidget):
 
         self.setHeaderLabels(["a","b","c","d"])
         self.header().setDefaultAlignment(Qt.AlignCenter)
-        self.header().setFixedHeight(23)
+        self.header().setFixedHeight(20)
         self.header().setStyleSheet("border-width:0px 0px 1px 0px")
         self.setIconSize(QSize(8, 8))
         self.fsize = QFont()
         self.fsize.setPointSize(9)
         self.additem()
-        self.t1 = self.startTimer(2000)
+        self.t1 = self.startTimer(10000)
 
     # def traverse(self,data):
     #     for i in range(self.topLevelItemCount()):
@@ -133,9 +133,11 @@ class DStreeView(QTreeWidget):
             root.setText(3, DStreeView.datalist[i][3])
         # print("TREE width %s" % self.sizeHint().width())
 
+    # def refreshdata(self):
+
+
     def timerEvent(self, e=QTimerEvent):
         if e.timerId() == self.t1:
-            print("aaa")
 
             data = DStreeView.testlist[DStreeView.testcount]
             print(data)
@@ -176,7 +178,7 @@ class Viewone(QWidget):
 class CustomizeFrame(QFrame):
     def __init__(self):
         super(CustomizeFrame, self).__init__()
-        self.setFixedWidth(200)
+        self.setFixedWidth(280)
         # print("frame width %s" % self.size().width())
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Raised)
