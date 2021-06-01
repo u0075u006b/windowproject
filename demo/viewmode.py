@@ -1,24 +1,11 @@
 import sys
+
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QTimer, QTimerEvent, QWaitCondition, QMutex
 from PyQt5.QtWidgets import *
 from APP.UI.common import QSSadd
-
-# class DataS:
-#     dic_status = {
-#         "hold": True,
-#         "unhold": False
-#     }
-#     dic_ipadd = {
-#         "rds": "192.168.0.1",
-#         "locs": "127.0.0.1",
-#         "dim": "Redis"
-#     }
-#     dic_datasize = {
-#         "k_1": [100, 200, 300, 400, 500],
-#         "k_2": [600, 700, 800, 900, 1000],
-#         "k_3": [1100, 1200, 1300, 1400, 1500]
-#     }
+from demo.dss_th import DataStatusTH
+from demo.ini_configparser import Config_Sec
 
 
 # class Th_dataserver(QThread):
@@ -70,80 +57,201 @@ from APP.UI.common import QSSadd
 #         super(ParenContainer, self).__init__()
 #         self.resize()
 
-class DataStatus(QThread):
-    isout = pyqtSignal(dict)
-    d_status_hdf = {"STS":False,"ADD":"--","PING":0,"EXP":[0,0,0]}
-    d_status_rdssql = {"STS":False,"ADD":"--","PING":-1,"EXP":[0,0,0]}
-    d_status_locsql = {"STS":False,"ADD":"--","PING":-1,"EXP":[0,0,0]}
-
-    def __init__(self):
-        super(DataStatus, self).__init__()
-        self.th_on = True
-        # self.cond = QWaitCondition()
-        # self.mutex = QMutex()
-
-    def hdfcheck(self):
-        pass
-    def rds_sql(self):
-        pass
-    def loc_sql(self):
-        pass
-    """def redis(self):next version add"""
-
-    def run(self):
-        pass
-
-
-
 
 
 class DStreeView(QTreeWidget):
-    __top = [['本地数据库','IP地址','PING','DATAS'],['远程数据库','IP地址','PING','DATAS'],['临时文件','文件路径','files','DATAS']]
+
+    toTHsingnal = pyqtSignal
+    __ini_path = "./config/datasources.ini"
+    __ini_cp = Config_Sec(__ini_path)
     __child_init = "-"
-    __ini = {"本地数据库":"mysql1","远程数据库":"slit","临时数据":"HDF"}
-    # [['远程','192.168.0.1','200MB','3K'],['本地','192.168.0.2','300MB','5M'],['临时','192.168.0.3','400MB','8T']]
-    # testlist = ['400MB','500MB','600MB','700MB','800MB','900MB','1000MB','1100MB']
-    testcount = 0
+
+    __toplevel = [["远程数据库", "IPADD", "PING", "DT"], ["本地数据库", "IPADD", "PING", "DT"], ["临时数据", "fPATH", "files", "DT"]]
 
     def __init__(self, par):
         super(DStreeView, self).__init__()
-        self.cow = self.__top
         self.widthsize = par
         self.setFixedHeight(160)
-        print(self.widthsize)
+        # print(self.widthsize)
         # print("widthsize is %s " % self.widthsize)
         self.setContentsMargins(0,0,0,0)
         self.setFrameShape(QFrame.WinPanel)
         self.setFrameShadow(QFrame.Sunken)
-        self.setStyleSheet("background-color:#FFFFF0;border:0px solid gray;border-top:1px solid gray;")
+        self.setStyleSheet("QTreeWidget{background-color:#FFFFF0;border:0px solid gray;border-top:1px solid gray; border-bottom:1px solid gray;}"
+                           "QTreeWidget::item{background-color:#FFFFF0;color:black;border-bottom:1px solid gray;}"
+                           "QTreeWidget::children{background-color:#FFFFF0;color:green;border-bottom:1px solid gray;}"
+                           )
         # self.setFrameStyle("border-top: 3px solid gray;")
-        self.setColumnCount(5)
-        self.setColumnWidth(0, 25)
-        self.setColumnWidth(1, (self.widthsize-25)/3)
-        self.setColumnWidth(2, (self.widthsize-25)/4)
-        self.setColumnWidth(3, (self.widthsize-25)/5)
-        self.setColumnWidth(4, (self.widthsize-25)/4)
-        #
-        self.setHeaderLabels(["","a","b","c","d"])
-        self.header().setDefaultAlignment(Qt.AlignCenter)
-        self.header().setFixedHeight(20)
-        self.header().setStyleSheet("border-width:0px 0px 1px 0px")
+        self.setColumnCount(4)
+        self.setColumnWidth(0, 95)
+        self.setColumnWidth(1, 75)
+        self.setColumnWidth(2, 48)
+        self.setColumnWidth(3, 50)
+
+
+        self.header().setStretchLastSection(False)
+        # self.header().setDefaultAlignment(Qt.AlignCenter)
+        # self.header().setFixedHeight(20)
+        # self.header().setStyleSheet("border-width:0px 0px 1px 0px")
         # self.header().setSectionResizeMode(0,QHeaderView.Fixed)
         self.setHeaderHidden(True)  # headerhidden
-        self.setIconSize(QSize(8, 8))
+        self.setIconSize(QSize(6, 6))
+        # self.setStyleSheet("QTreeView{font-size:9px;}")
         self.fsize = QFont()
         self.fsize.setPointSize(9)
-        self.addtopLevel()
+        self.childicon = QIcon("./icon/Indicator_red.svg")
+        # self.rooticon.addFile("./icon/Indicator_green.svg",QSize(8,8),mode=QIcon.Normal, state=QIcon.On)
+        # self.rooticon.addFile("./icon/Indicator_red.svg", QSize(8, 8), mode=QIcon.Normal, state=QIcon.Off)
+        self.init()
+
+    def init(self):
+        if self.__ini_cp:
+            self.addtopLevel()
+            self.addchilds()
+        else:
+            pass
+
+    def addtopLevel(self):
+        for i in range(len(self.__toplevel)):
+            root = QTreeWidgetItem(self)
+            root.setChildIndicatorPolicy(0)
+            for j in range(len(self.__toplevel[i])):
+                root.setFont(j, self.fsize)
+                root.setText(j, self.__toplevel[i][j])
+
+    def addchilds(self):
+        __childinit = list(self.__ini_cp.r_item().values())
+        for i in range(len(__childinit)):
+            for _tup in __childinit[i]:
+                if _tup[0] == "servertype" and _tup[1] == "rds":
+                    wrt = dict(__childinit[i])
+                    for i in range(self.topLevelItemCount()):
+                        if self.topLevelItem(i).text(0) == "远程数据库":
+                            child = QTreeWidgetItem()
+                            child.setText(0, wrt['username'])
+                            child.setFont(0, self.fsize)
+                            child.setIcon(0, self.childicon)
+                            child.setText(1, wrt['ipadd'])
+                            child.setFont(1, self.fsize)
+                            child.setText(2, self.__child_init)
+                            child.setFont(2, self.fsize)
+                            child.setText(3, wrt['dbtype'])
+                            child.setFont(3, self.fsize)
+                            self.topLevelItem(i).addChild(child)
+                        else:
+                            pass
+
+                elif _tup[0] == "servertype" and _tup[1] == "locs":
+                    wrt = dict(__childinit[i])
+                    for i in range(self.topLevelItemCount()):
+                        if self.topLevelItem(i).text(0) == "本地数据库":
+                            child = QTreeWidgetItem()
+                            child.setText(0, wrt['username'])
+                            child.setFont(0, self.fsize)
+                            child.setIcon(0, self.childicon)
+                            child.setText(1, wrt['ipadd'])
+                            child.setFont(1, self.fsize)
+                            child.setText(2, self.__child_init)
+                            child.setFont(2, self.fsize)
+                            child.setText(3, wrt['dbtype'])
+                            child.setFont(3, self.fsize)
+                            self.topLevelItem(i).addChild(child)
+                        else:
+                            pass
+
+                elif _tup[0] == "servertype" and _tup[1] == "files":
+                    wrt = dict(__childinit[i])
+                    print(wrt)
+                    for i in range(self.topLevelItemCount()):
+                        if self.topLevelItem(i).text(0) == "临时数据":
+                            child = QTreeWidgetItem()
+                            child.setText(0, wrt['servertype'])
+                            child.setFont(0, self.fsize)
+                            child.setIcon(0, self.childicon)
+                            child.setText(1, wrt['filepath'])
+                            child.setFont(1, self.fsize)
+                            child.setToolTip(1, wrt['filepath'])
+                            child.setText(2, "-")
+                            child.setFont(2, self.fsize)
+                            child.setText(3, wrt['dbtype'])
+                            child.setFont(3, self.fsize)
+                            self.topLevelItem(i).addChild(child)
+                        else:
+                            pass
+
+
+
+        # for i in range(self.topLevelItemCount()):
+        #     print(self.topLevelItem(i).text(0))
+        #     if self.topLevelItem(i).text(0) == "远程数据库":
+        #         child = QTreeWidgetItem()
+        #         for j in self.__ini_cp.r_item()["远程数据库"]:
+        #             if j[0] == "username":
+        #                 child.setText(0,j[1])
+        #                 child.setFont(0, self.fsize)
+        #                 child.setIcon(0,self.childicon)
+        #             else:
+        #                 pass
+        #             if j[0] == "ipadd":
+        #                 child.setText(1,j[1])
+        #                 child.setFont(1, self.fsize)
+        #             else:
+        #                 pass
+        #         child.setText(2, self.__child_init)
+        #         child.setFont(2, self.fsize)
+        #         child.setText(3, self.__child_init)
+        #         child.setFont(3, self.fsize)
+        #         self.topLevelItem(i).addChild(child)
+        #     elif self.topLevelItem(i).text(0) == "本地数据库":
+        #         child = QTreeWidgetItem()
+        #         for j in self.__ini_cp.r_item()["本地数据库"]:
+        #             if j[0] == "username":
+        #                 child.setText(0,j[1])
+        #                 child.setFont(0, self.fsize)
+        #                 child.setIcon(0,self.childicon)
+        #             else:
+        #                 pass
+        #             if j[0] == "ipadd":
+        #                 child.setText(1,j[1])
+        #                 child.setFont(1, self.fsize)
+        #             else:
+        #                 pass
+        #         child.setText(2, self.__child_init)
+        #         child.setFont(2, self.fsize)
+        #         child.setText(3, self.__child_init)
+        #         child.setFont(3, self.fsize)
+        #         self.topLevelItem(i).addChild(child)
+        #     elif self.topLevelItem(i).text(0) == "临时数据":
+        #         child = QTreeWidgetItem()
+        #         for j in self.__ini_cp.r_item()["临时数据"]:
+        #             if j[0] == "filetype":
+        #                 child.setText(0, j[1])
+        #                 child.setFont(0, self.fsize)
+        #             else:
+        #                 pass
+        #             if j[0] == "filepath":
+        #                 child.setText(1, j[1])
+        #                 child.setFont(1, self.fsize)
+        #             else:
+        #                 pass
+        #         child.setText(2, self.__child_init)
+        #         child.setFont(2, self.fsize)
+        #         child.setText(3, self.__child_init)
+        #         child.setFont(3, self.fsize)
+        #         self.topLevelItem(i).addChild(child)
+        #     else:
+        #         pass
+        #
+
         # self.horizontalScrollBar().setStyleSheet(QSSadd.readqss("./scrollbar.qss"))
         # self.horizontalScrollBar().setFixedHeight(20)
 
-        print(self.topLevelItemCount())
-        for i in range(self.topLevelItemCount()):
-            for j in range(0,self.topLevelItem(i).columnCount()):
-                child = QTreeWidgetItem()
-                child.setText(0, self.__ini[self.topLevelItem(i).text(1)])
-                child.setText(1, self.__ini[self.topLevelItem(i).text(1)])
-                self.topLevelItem(i).addChild()
+        # for i in range(self.topLevelItemCount()):
+        #     for j in range(0,self.topLevelItem(i).columnCount()):
+        #         child = QTreeWidgetItem()
+        #         child.setText(0, self.__ini[self.topLevelItem(i).text(1)])
+        #         child.setText(1, self.__ini[self.topLevelItem(i).text(1)])
+        #         self.topLevelItem(i).addChild()
 
 
 
@@ -163,21 +271,7 @@ class DStreeView(QTreeWidget):
     #         else:
     #             pass
 
-    def addtopLevel(self):
-        for i in range(len(self.cow)):
-            root = QTreeWidgetItem(self)
-            root_icon = QIcon("./icon/Indicator_green.svg")
-            root.setIcon(0, root_icon)
-            root.setFont(1, self.fsize)
-            root.setFont(2, self.fsize)
-            root.setFont(3, self.fsize)
-            root.setFont(4, self.fsize)
 
-            root.setChildIndicatorPolicy(0)
-            root.setText(1, self.cow[i][0])
-            root.setText(2, self.cow[i][1])
-            root.setText(3, self.cow[i][2])
-            root.setText(4, self.cow[i][3])
 
 
 
@@ -203,13 +297,18 @@ class DStreeView(QTreeWidget):
     #         else:
     #             DStreeView.testcount = 0
 
+    # def timerEvent(self, event: QTimerEvent):
+    #     if event.timerId() == self.t1:
+    #         con = self.findItems("远程数据库", Qt.MatchExactly, 1)[0]
+    #         print(con)
+    #         con.setText(1, "近程数据库")
 
 
 class Viewone(QWidget):
     def __init__(self, par):
         super(Viewone, self).__init__()
         self.parsiz = par
-        print(self.parsiz)
+        # print(self.parsiz)
         self.box = QVBoxLayout()
         self.box.setContentsMargins(0, 0, 0, 0)
         self.lab = QLabel()
@@ -227,6 +326,8 @@ class Viewone(QWidget):
         self.setLayout(self.box)
 
         # print(self.viewcontent.model().columnCount())
+    def refresh(self):
+        pass
 
 
 
@@ -257,6 +358,7 @@ class MainWin(QMainWindow):
         self.r_sider = CustomizeFrame()
         self.mainui()
 
+
     def mainui(self):
         self.setWindowTitle(MainWin.appname)
         self.resize(800,600)
@@ -284,6 +386,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     r = MainWin()
     r.show()
+
     # f = QFont()
     app.setFont(QFont("Times New Roman, SimSun, SimSun-ExtB, YouYuan"))
     # f.setFamily("YouYuan")
