@@ -11,7 +11,7 @@ class Config_Sec:
         self.filepath = filepath
         self.__cf = configparser.ConfigParser()
         self.__cf.read(self.filepath, encoding="utf-8")
-        self.r=self.__cf
+        self.r = self.__cf
 
     def r_sec(self):
         for i in self.__cf.sections():
@@ -31,11 +31,12 @@ class Config_Sec:
 # # print(run.r_sec())
 # # print(run.r_item())
 # d = run.r_sec()
-# print(d)
 # for i in d:
 #     # print(run.r.options(i))
-#     # print(run.r.get(i,"servertype"))
-#     print(run.r.items(i))
+#     if i == "临时数据":
+#         print(run.r.get(i,"filepath"))
+
+    # print(run.r.options('临时数据'))
 # print(list(run.r_item().values()))
 
 # for i in range(3):

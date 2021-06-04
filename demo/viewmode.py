@@ -99,7 +99,8 @@ class DStreeView(QTreeWidget):
         # self.setStyleSheet("QTreeView{font-size:9px;}")
         self.fsize = QFont()
         self.fsize.setPointSize(9)
-        self.childicon = QIcon("./icon/Indicator_red.svg")
+        self.childicon_flase = QIcon("./icon/Indicator_red.svg")
+        self.childicon_true = QIcon("./icon/Indicator_green.svg")
         # self.rooticon.addFile("./icon/Indicator_green.svg",QSize(8,8),mode=QIcon.Normal, state=QIcon.On)
         # self.rooticon.addFile("./icon/Indicator_red.svg", QSize(8, 8), mode=QIcon.Normal, state=QIcon.Off)
         self.init()
@@ -108,19 +109,21 @@ class DStreeView(QTreeWidget):
         if self.__ini_cp:
             self.addtopLevel()
             self.addchilds()
+            self.expandAll()
         else:
             pass
 
     def addtopLevel(self):
         for i in range(len(self.__toplevel)):
             root = QTreeWidgetItem(self)
-            root.setChildIndicatorPolicy(0)
+            root.setChildIndicatorPolicy(2)
             for j in range(len(self.__toplevel[i])):
                 root.setFont(j, self.fsize)
                 root.setText(j, self.__toplevel[i][j])
 
     def addchilds(self):
         __childinit = list(self.__ini_cp.r_item().values())
+        print(self.__ini_cp.r_item())
         for i in range(len(__childinit)):
             for _tup in __childinit[i]:
                 if _tup[0] == "servertype" and _tup[1] == "rds":
@@ -130,7 +133,7 @@ class DStreeView(QTreeWidget):
                             child = QTreeWidgetItem()
                             child.setText(0, wrt['username'])
                             child.setFont(0, self.fsize)
-                            child.setIcon(0, self.childicon)
+                            child.setIcon(0, self.childicon_flase)
                             child.setText(1, wrt['ipadd'])
                             child.setFont(1, self.fsize)
                             child.setText(2, self.__child_init)
@@ -148,7 +151,7 @@ class DStreeView(QTreeWidget):
                             child = QTreeWidgetItem()
                             child.setText(0, wrt['username'])
                             child.setFont(0, self.fsize)
-                            child.setIcon(0, self.childicon)
+                            child.setIcon(0, self.childicon_flase)
                             child.setText(1, wrt['ipadd'])
                             child.setFont(1, self.fsize)
                             child.setText(2, self.__child_init)
@@ -161,13 +164,12 @@ class DStreeView(QTreeWidget):
 
                 elif _tup[0] == "servertype" and _tup[1] == "files":
                     wrt = dict(__childinit[i])
-                    print(wrt)
                     for i in range(self.topLevelItemCount()):
                         if self.topLevelItem(i).text(0) == "临时数据":
                             child = QTreeWidgetItem()
                             child.setText(0, wrt['servertype'])
                             child.setFont(0, self.fsize)
-                            child.setIcon(0, self.childicon)
+                            child.setIcon(0, self.childicon_flase)
                             child.setText(1, wrt['filepath'])
                             child.setFont(1, self.fsize)
                             child.setToolTip(1, wrt['filepath'])
