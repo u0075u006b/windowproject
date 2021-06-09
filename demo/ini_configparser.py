@@ -3,10 +3,9 @@ import configparser
 
 class Config_Sec:
     __sec_list = []
-    __item_dict = {}
+    __itempar_list = []
 
-
-    def __init__(self,filepath):
+    def __init__(self, filepath):
         # f_path = "./config/datasources.ini"
         self.filepath = filepath
         self.__cf = configparser.ConfigParser()
@@ -18,18 +17,22 @@ class Config_Sec:
             self.__sec_list.append(i)
         return self.__sec_list
 
-    def r_item(self):
+    def r_itempar(self):
         for i in self.__cf.sections():
-            self.__item_dict[i] = self.__cf.items(i)
-        return self.__item_dict
+            dic = {}
+            dic["section"] = i
+            for item in self.__cf.items(i):
+                dic[item[0]] = item[1]
+            self.__itempar_list.append(dic)
+        return self.__itempar_list
 
 
 
 
 # f_path = "./config/datasources.ini"
 # run = Config_Sec(f_path)
-# # print(run.r_sec())
-# # print(run.r_item())
+# # # print(run.r_sec())
+# print(run.r_itempar())
 # d = run.r_sec()
 # for i in d:
 #     # print(run.r.options(i))

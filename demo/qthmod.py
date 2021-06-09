@@ -96,7 +96,8 @@ class Dataserver(QThread):
         # self.rdstime = self.startTimer(5000)
         # self.locstime = self.startTimer(5000)
 
-        self.filechecktime = self.startTimer(10000)
+
+        self.filechecktime = None
 
     def createconnect(self):
         if self.congfig and type(data) == dict:
@@ -107,8 +108,9 @@ class Dataserver(QThread):
         #     if i == "临时数据":
         #         print(run.r.get(i, "filepath"))
 
-    def hdfcheck(self):
-        pass
+    def filescheck(self):
+
+
     def rds_sql(self):
         pass
     def loc_sql(self):
@@ -116,6 +118,8 @@ class Dataserver(QThread):
     """def redis(self):next version add"""
 
     def run(self):
+        while self.th_on:
+            if
 
     def timerEvent(self,e:QTimerEvent):
         if e.timerId() == self.filechecktime:
