@@ -1,4 +1,5 @@
 import sys
+import os
 import time
 
 from PyQt5.QtGui import *
@@ -6,6 +7,7 @@ from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QTimer, QTimerEvent, QW
 from PyQt5.QtWidgets import *
 from demo.ini_configparser import Config_Sec
 from demo.gobalvar import GobalVar
+from demo.test import ServerRun
 
 
 class DStreeView(QTreeWidget):
@@ -15,6 +17,8 @@ class DStreeView(QTreeWidget):
     __child_init = "-"
 
     __toplevel = [["远程数据库", "IPADD", "PING", "DT"], ["本地数据库", "IPADD", "PING", "DT"], ["临时数据", "fPATH", "files", "DT"]]
+
+    __rootpath = os.getcwd()
 
     def __init__(self, par):
         super(DStreeView, self).__init__()
@@ -72,6 +76,7 @@ class DStreeView(QTreeWidget):
 
     def addchilds(self):
         __childinit = GobalVar.var_dataserverini
+
         for dic_i in __childinit:
             if dic_i["servertype"] == "rds":
                 for i in range(self.topLevelItemCount()):
@@ -111,12 +116,12 @@ class DStreeView(QTreeWidget):
                 for i in range(self.topLevelItemCount()):
                     if self.topLevelItem(i).text(0) == "临时数据":
                         child = QTreeWidgetItem()
-                        child.setText(0, dic_i['servertype'])
+                        child.setText(0, dic_i['username'])
                         child.setFont(0, self.fsize)
                         child.setIcon(0, self.childicon_flase)
-                        child.setText(1, dic_i['filepath'])
+                        child.setText(1, str(os.path.join(self.__rootpath,dic_i['filepath'])))
                         child.setFont(1, self.fsize)
-                        child.setToolTip(1, dic_i['filepath'])
+                        child.setToolTip(1, str(os.path.join(self.__rootpath,dic_i['filepath'])))
                         child.setText(2, "-")
                         child.setFont(2, self.fsize)
                         child.setText(3, dic_i['dbtype'])
@@ -144,9 +149,12 @@ class Viewone(QWidget):
         self.box.addWidget(self.viewcontent)
         self.box.addStretch()
         self.setLayout(self.box)
+        self.refresh(GobalVar.var_dataserverini)
 
-    def refresh(self):
-        pass
+    def refresh(self,inipar):
+        server = ServerRun(inipar)
+        print(server.servers[3].__dict__)
+
 
 
 class CustomizeFrame(QFrame):
@@ -186,9 +194,6 @@ class MainWin(QMainWindow):
 
         self.box_central.setContentsMargins(0, 0, 2, 0)
         self.central_widget.setLayout(self.box_central)
-
-    def viewrefresh(self):
-        self.time = QTimer(self)
 
 
 def sysinit(**kwargs):

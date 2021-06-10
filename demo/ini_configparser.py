@@ -31,7 +31,7 @@ class Config_Sec:
 
 # f_path = "./config/datasources.ini"
 # run = Config_Sec(f_path)
-# # # print(run.r_sec())
+#
 # print(run.r_itempar())
 # d = run.r_sec()
 # for i in d:

@@ -3,15 +3,8 @@ from sqlalchemy import *
 import os
 import random
 
-data = {
-    '远程数据库1': [('servertype', 'rds'), ('dbtype', 'MySQL'), ('ipadd', '192.168.0.1'), ('username', 'mysql1'), ('port', '2008'), ('password', '%12544')],
-    '远程数据库2': [('servertype', 'rds'), ('dbtype', 'MySQL'), ('ipadd', '192.168.2.3'), ('username', 'mysql2'), ('port', '2008'), ('password', '%12544')],
-    '本地数据库': [('servertype', 'locs'), ('dbtype', 'Sqlite'), ('ipadd', '127.0.0.1'), ('port', '30018'), ('username', 'mysql'), ('password', '%12544')],
-    '临时数据': [('servertype', 'files'), ('dbtype', 'hdf'), ('filepath', 'temp')]
-}
 
-
-class SQLserver:
+class SQLserver:#
     servers = 0
 
     def __init__(self):
@@ -77,27 +70,38 @@ class Fileserver:
 
 
 
-class Dataserver(QThread):
+class ServerRun(QThread):
+    """
+    statusfresh {}
+    """
     datarefresh = pyqtSignal(dict)
     errsignal = pyqtSignal(str)
+    statusfresh = pyqtSignal(tuple)
 
     refresh_rds = {}
     refresh_locs = {}
     refresh_files = {}
     servers = []
 
+    names = locals()
+
     def __init__(self,inipr):
-        super(Dataserver, self).__init__()
+        super(ServerRun, self).__init__()
         self.th_on = True
         # self.cond = QWaitCondition()
         self.mutex = QMutex()
-        self.congfig = inipr #par is dict
-        self.createconnect()
+        self.config = inipr    #pr is list->dict
+        self.createsrvs()
+        # self.createconnect()
         # self.rdstime = self.startTimer(5000)
         # self.locstime = self.startTimer(5000)
+        # self.filechecktime = None
 
+    def createsrvs(self):
+        for con in self.config:
+            if con['servertype']=='files':
+                self.names[]
 
-        self.filechecktime = None
 
     def createconnect(self):
         if self.congfig and type(data) == dict:
