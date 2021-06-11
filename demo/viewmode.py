@@ -118,7 +118,7 @@ class DStreeView(QTreeWidget):
                         child = QTreeWidgetItem()
                         child.setText(0, dic_i['username'])
                         child.setFont(0, self.fsize)
-                        child.setIcon(0, self.childicon_flase)
+                        child.setIcon(0, self.childicon_true)
                         child.setText(1, str(os.path.join(self.__rootpath,dic_i['filepath'])))
                         child.setFont(1, self.fsize)
                         child.setToolTip(1, str(os.path.join(self.__rootpath,dic_i['filepath'])))
@@ -144,16 +144,36 @@ class Viewone(QWidget):
         qlabfont.setPointSize(10)
         self.lab.setFont(qlabfont)
         self.viewcontent = DStreeView(self.parsiz)
-
         self.box.addWidget(self.lab)
         self.box.addWidget(self.viewcontent)
         self.box.addStretch()
         self.setLayout(self.box)
-        self.refresh(GobalVar.var_dataserverini)
 
-    def refresh(self,inipar):
-        server = ServerRun(inipar)
-        print(server.servers[3].__dict__)
+        self.refreshthread(GobalVar.var_dataserverini)
+
+    def refreshthread(self,inipar):
+        self.server = ServerRun(inipar)
+        self.server.statusfresh.connect(self.treefreshsolt)
+        self.server.start()
+
+    def treefreshsolt(self,d):
+        print(d)
+        if d:
+            for i in range(self.viewcontent.topLevelItemCount()):
+                if self.viewcontent.topLevelItem(i).text(0) == "临时数据":
+                    print(d["status"])
+                    print(d["filesnum"])
+                    if d["status"] == True:
+                        self.viewcontent.topLevelItem(i).child.setIcon(0, self.viewcontent.childicon_true)#？？？？
+                        print("set icon ok")
+                    else:
+                        pass
+                    if d["filesnum"] == None:
+                        pass
+                    else:
+                        self.viewcontent.topLevelItem(i).child.setText(2, d["filesnum"])
+                else:
+                    pass
 
 
 
