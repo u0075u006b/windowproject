@@ -7,3 +7,4 @@ class QSSadd:
     def readqss(style):
         with open(style, 'r') as f:
             return f.read()
+

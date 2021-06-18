@@ -21,7 +21,7 @@ class M_window(QMainWindow,QWidget):
     def mainUI(self):
         self.setWindowTitle(M_window.appname)
         self.resize(900,600)
-        self.setWindowIcon(QIcon("./source/icon/mianwin5050.svg"))
+        # self.setWindowIcon(QIcon("./source/icon/mianwin5050.svg"))
         self.setCentralWidget(self.central_widget)
         box_0 = QHBoxLayout()
         self.leftwidget = QWidget()
@@ -60,38 +60,52 @@ class M_window(QMainWindow,QWidget):
         self.sta_bar.addWidget(QLabel("程序运行中    "))
         self.setStatusBar(self.sta_bar)
 
+    # def rmlay(self,s):
+    #     _str = s
+    #     if _str == "A":
+    #         self.rightwidget.setStyleSheet("background-color:red;")
+    #         if self.rightwidget.layout() is not None:
+    #             print(self.rightwidget.layout())
+    #             print(self.rightwidget.layout().count())
+    #             for i in range(self.rightwidget.layout().count()):
+    #                 self.rightwidget.layout().itemAt(i).widget().deleteLater()
+    #             QObjectCleanupHandler().add(self.rightwidget.layout())
+    #             print("------------------------")
+    #             print(self.rightwidget.layout())
+    #             s = QObjectCleanupHandler().isEmpty()
+    #             print(s)
+    #
+    #             # for i in range(0,self.rightwidget.layout().count()):
+    #             #     print(self.rightwidget.layout().itemAt(i).widget())
+    #             _la = QVBoxLayout()
+    #             for i in range(2):
+    #                 tx = QLabel(_str)
+    #                 tx.setStyleSheet('color:white;font:bold 50px;')
+    #                 _la.addWidget(tx)
+    #             self.rightwidget.setLayout(_la)
+    #             self.rightwidget.update()
+    #         else:
+    #             print(self.rightwidget.layout())
+    #             _la = QHBoxLayout()
+    #             for i in range(3):
+    #                 tx = QLabel(_str)
+    #                 tx.setStyleSheet('color:white;font:bold 50px;')
+    #                 _la.addWidget(tx)
+    #             self.rightwidget.setLayout(_la)
+    #
+    #     elif _str == "B":
+    #         self.rightwidget.setStyleSheet("background-color:yellow;")
+    #
+    #     elif _str == "C":
+    #         self.rightwidget.setStyleSheet("background-color:blue;")
+    #
+    #     else:
+    #         pass
+
     def rmlay(self,s):
         _str = s
         if _str == "A":
             self.rightwidget.setStyleSheet("background-color:red;")
-            if self.rightwidget.layout() is not None:
-                print(self.rightwidget.layout())
-                print(self.rightwidget.layout().count())
-                for i in range(self.rightwidget.layout().count()):
-                    self.rightwidget.layout().itemAt(i).widget().deleteLater()
-                QObjectCleanupHandler().add(self.rightwidget.layout())
-                print("------------------------")
-                print(self.rightwidget.layout())
-                s = QObjectCleanupHandler().isEmpty()
-                print(s)
-
-                # for i in range(0,self.rightwidget.layout().count()):
-                #     print(self.rightwidget.layout().itemAt(i).widget())
-                _la = QVBoxLayout()
-                for i in range(2):
-                    tx = QLabel(_str)
-                    tx.setStyleSheet('color:white;font:bold 50px;')
-                    _la.addWidget(tx)
-                self.rightwidget.setLayout(_la)
-                self.rightwidget.update()
-            else:
-                print(self.rightwidget.layout())
-                _la = QHBoxLayout()
-                for i in range(3):
-                    tx = QLabel(_str)
-                    tx.setStyleSheet('color:white;font:bold 50px;')
-                    _la.addWidget(tx)
-                self.rightwidget.setLayout(_la)
 
         elif _str == "B":
             self.rightwidget.setStyleSheet("background-color:yellow;")
@@ -105,6 +119,26 @@ class M_window(QMainWindow,QWidget):
     def rmlayitems(self,s,lay):
         _str = s
         _la = lay
+        if _str=="A":
+            self.rightwidget.setStyleSheet("background-color:red;")
+
+        elif _str=="B":
+            self.rightwidget.setStyleSheet("background-color:yellow;")
+
+        elif _str=="C":
+            self.rightwidget.setStyleSheet("background-color:blue;")
+        else:
+            pass
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    run = M_window()
+    run.show()
+    sys.exit(app.exec_())
+
+
+"""
         if _str=="A":
             self.rightwidget.setStyleSheet("background-color:red;")
             print(self.rightwidget.layout())
@@ -145,14 +179,7 @@ class M_window(QMainWindow,QWidget):
             self.rightwidget.setLayout(_la)
         else:
             pass
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    run = M_window()
-    run.show()
-    sys.exit(app.exec_())
-
+"""
 
 
 

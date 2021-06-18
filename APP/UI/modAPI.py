@@ -4,9 +4,9 @@ from .uimods.vtoolmenu import *
 
 class DrawerVtMenu:
     """
-    1\need BUTTON STR from a dict
-    2\need BUTTON height'sSIZEPPOLICY from a int
-    3\need WIDGET-QSS
+    1\n BUTTON STR from a dict
+    2\n BUTTON height'sSIZEPPOLICY from a int
+    3\n WIDGET-QSS
     """
     __qss = None
     __top_icon = []
@@ -43,11 +43,11 @@ class DrawerVtMenu:
             menuui.setqss(self.__qss)
 
             if bool(self.__top_icon) and bool(self.__sub_icon):
-                __iconlist = [self.__top_icon,self.__sub_icon]
-                menuui.seticon(__iconlist)
+                __icon_list = [self.__top_icon,self.__sub_icon]
+                menuui.seticon(__icon_list)
             elif bool(self.__top_icon):
-                __iconlist = [self.__top_icon, None]
-                menuui.seticon(__iconlist)
+                __icon_list = [self.__top_icon, None]
+                menuui.seticon(__icon_list)
             else:
                 pass
 

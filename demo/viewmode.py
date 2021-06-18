@@ -164,14 +164,17 @@ class Viewone(QWidget):
                     print(d["status"])
                     print(d["filesnum"])
                     if d["status"] == True:
-                        self.viewcontent.topLevelItem(i).child.setIcon(0, self.viewcontent.childicon_true)#？？？？
-                        print("set icon ok")
+                        for child_cow in range(self.viewcontent.topLevelItem(i).childCount()):
+                            if self.viewcontent.topLevelItem(i).child(child_cow).text(0) == "TEMP":
+                                self.viewcontent.topLevelItem(i).child(child_cow).setIcon(0, self.viewcontent.childicon_true)
                     else:
                         pass
                     if d["filesnum"] == None:
                         pass
                     else:
-                        self.viewcontent.topLevelItem(i).child.setText(2, d["filesnum"])
+                        for child_cow in range(self.viewcontent.topLevelItem(i).childCount()):
+                            if self.viewcontent.topLevelItem(i).child(child_cow).text(0) == "TEMP":
+                                self.viewcontent.topLevelItem(i).child(child_cow).setText(2,str(d["filesnum"]))
                 else:
                     pass
 

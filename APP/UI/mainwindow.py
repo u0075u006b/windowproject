@@ -106,7 +106,7 @@ class M_window(QMainWindow):
     def mainUI(self):
         self.setWindowTitle(M_window.appname)
         self.resize(900,600)
-        self.setWindowIcon(QIcon("./source/icon/mianwin5050.svg"))
+        # self.setWindowIcon(QIcon("./source/icon/mianwin5050.svg"))
         self.setCentralWidget(self.central_widget)
         box_0 = QHBoxLayout()
         box_0.setContentsMargins(0,0,0,0)
