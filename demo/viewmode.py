@@ -132,22 +132,38 @@ class DStreeView(QTreeWidget):
 
 
 class Viewone(QWidget):
+    # tothreadsin = pyqtSignal()
+
     def __init__(self, par):
         super(Viewone, self).__init__()
         self.parsiz = par
         # print(self.parsiz)
         self.box = QVBoxLayout()
         self.box.setContentsMargins(0, 0, 0, 0)
+        self.pusbt =  QPushButton()
+        self.rstartbt = QPushButton()
         self.lab = QLabel()
+        self.uiset()
+
+    def uiset(self):
+        self.pusbt.resize(50,30)
+        self.pusbt.setText("暂停")
+        self.rstartbt.resize(50,30)
+        self.rstartbt.setText("重启")
         self.lab.setText("DATA SERVER:")
         qlabfont = QFont()
         qlabfont.setPointSize(10)
         self.lab.setFont(qlabfont)
         self.viewcontent = DStreeView(self.parsiz)
+        self.box.addWidget(self.pusbt)
+        self.box.addWidget(self.rstartbt)
         self.box.addWidget(self.lab)
         self.box.addWidget(self.viewcontent)
         self.box.addStretch()
         self.setLayout(self.box)
+
+        self.pusbt.clicked.connect(self.busingla1)
+        self.rstartbt.clicked.connect(self.busingla2)
 
         self.refreshthread(GobalVar.var_dataserverini)
 
@@ -155,6 +171,20 @@ class Viewone(QWidget):
         self.server = ServerRun(inipar)
         self.server.statusfresh.connect(self.treefreshsolt)
         self.server.start()
+        self.server.settimer()
+
+    def busingla1(self):
+        print("getdata testing,PUSH")
+        self.server.statusFlg = False
+        self.server.killtimer()
+        self.server.getdataFlg = True
+
+        self.server.settimer()
+
+
+    def busingla2(self):
+        print("rstartbt is clicked")
+        self.server.rsettimer()
 
     def treefreshsolt(self,d):
         print(d)
@@ -238,5 +268,5 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     r = MainWin()
     r.show()
-    app.setFont(QFont("Times New Roman, SimSun, SimSun-ExtB, YouYuan"))
+    app.setFont(QFont("Times New Roman, SimSun-ExtB, YouYuan")) #SimSun
     sys.exit(app.exec_())

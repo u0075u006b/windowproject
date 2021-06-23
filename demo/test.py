@@ -279,9 +279,12 @@ class ServerRun(QThread):
     """
     statusfresh {}
     """
+    timetestcon = 0
     datarefresh = pyqtSignal(dict)
     errsignal = pyqtSignal(str)
     statusfresh = pyqtSignal(dict)
+
+    ckeck_times={"file_t":2000,"rds_t":5000,"locs_t":2000}
 
     refresh_rds = {}
     refresh_locs = {}
@@ -290,12 +293,12 @@ class ServerRun(QThread):
 
     names = locals()
 
+
     def __init__(self, inipr):
         super(ServerRun, self).__init__()
         self.th_on = True
         self.statusFlg = True
         self.getdataFlg = False
-
         # self.cond = QWaitCondition()
         self.mutex = QMutex()
         self.config = inipr  # pr is list->dict
@@ -306,9 +309,31 @@ class ServerRun(QThread):
 
         self.createsrvs()
 
-        # self.rdstime = self.startTimer(5000)
-        # self.locstime = self.startTimer(5000)
-        # self.filechecktime = None
+
+    def killtimer(self):
+        print(self.filetimer)
+        print(self.rdstimer)
+        print(self.locstimer)
+        if self.filetimer:
+            self.killTimer(self.filetimer)
+        if self.rdstimer:
+            self.killTimer(self.rdstimer)
+        if self.locstimer:
+            self.killTimer(self.locstimer)
+        else:
+            pass
+
+    def settimer(self,typ=None):
+        if typ == "file":
+            self.filetimer = self.startTimer(self.ckeck_times["file_t"])
+        elif typ == "rds":
+            self.rdstimer = self.startTimer(self.ckeck_times["rds_t"])
+        elif typ == "locs":
+            self.locstimer = self.startTimer(self.ckeck_times["locs_t"])
+        else:
+            self.filetimer = self.startTimer(self.ckeck_times["file_t"])
+            self.rdstimer = self.startTimer(self.ckeck_times["rds_t"])
+            self.locstimer = self.startTimer(self.ckeck_times["locs_t"])
 
     def createsrvs(self):
         for con in self.config:
@@ -325,7 +350,6 @@ class ServerRun(QThread):
                 pass
 
     def statuscheck(self):
-
         rdic = {}
 
         for srv in self.servers:
@@ -345,31 +369,40 @@ class ServerRun(QThread):
             else:
                 pass
 
-    def timestart(self,file=None,rds=None,locs=None):
-        if isinstance(file,int):
-            self.filetimer = self.startTimer(file)
-        if isinstance(rds, int):
-            self.rdstimer = self.startTimer(rds)
-        if isinstance(locs, int):
-            self.locstimer = self.startTimer(locs)
-
-    def timstop(self):
-        self.filetimer = None
-        self.rdstimer = None
-        self.locstimer = None
+    # def timestart(self,file=None,rds=None,locs=None):
+    #     if isinstance(file,int):
+    #         self.filetimer = self.startTimer(file)
+    #     if isinstance(rds, int):
+    #         self.rdstimer = self.startTimer(rds)
+    #     if isinstance(locs, int):
+    #         self.locstimer = self.startTimer(locs)
 
     def sendfilemsg(self,rus):
         if rus:
             self.statusfresh.emit(rus)
 
+    def changegetdata(self):
+
+        # for i in range(10):
+        #     print("getdata:", i + 1)
+        self.getdataFlg = False
+
     def run(self):
-        if self.th_on:
-            if self.statusFlg:
-                s = self.statuscheck()
-                print(s)
-                self.sendfilemsg(s)
-                self.timestart(file=1000)
+        if self.statusFlg:
+            s = self.statuscheck()
+            print("qthread statuscheck:", s)
+            self.sendfilemsg(s)
+        while self.th_on:
+            if self.getdataFlg:
+                self.changegetdata()
+
 
     def timerEvent(self, e=QTimerEvent):
-        if e.timerId() == self.self.filetimer:
-            self.sendfilemsg(self.statuscheck)
+        if e.timerId() == self.filetimer:
+            print("file计时器运行",self.timetestcon)
+            s = self.statuscheck()
+            self.sendfilemsg(s)
+        if e.timerId() == self.rdstimer:
+            print("rds计时器运行")
+        if e.timerId() == self.locstimer:
+            print("locs计时器运行")
