@@ -85,14 +85,14 @@ class LeftItem(QListWidget):
         super(LeftItem, self).__init__()
         self.btname = btname
         self.itemlist = listname
+        # self.setObjectName("leftmenu")
         self.setContentsMargins(0,0,0,0)
-        self.setStyleSheet("border:0px")
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
 
     def c_ui(self):
+        self.setStyleSheet(self.__qss)
         self.t_icon_fold = self.__iconlist[0][0]
         self.t_icon_unfold = self.__iconlist[0][1]
-
         self.top_obj_0 = QListWidgetItem(self)
         self.btn_0 = TopButton(self.top_obj_0, self.btname[0],self.t_icon_fold,self.t_icon_unfold)
         self.btn_0.setObjectName("menu_0")
@@ -137,6 +137,8 @@ class LeftItem(QListWidget):
             self.sub_obj.setHidden(True)
         else:
             pass
+
+
 
     def setqss(self, qss):
         self.__qss = qss

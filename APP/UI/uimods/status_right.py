@@ -1,13 +1,10 @@
-import sys
 import os
-import time
-
+import sys
 from PyQt5.QtGui import *
-from PyQt5.QtCore import QSize, pyqtSignal
+from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QTimer, QTimerEvent, QWaitCondition, QMutex
 from PyQt5.QtWidgets import *
-from demo.gobalvar import GobalVar
-from demo.test import ServerRun
-from demo.mianinit import MianInit
+from gobalvar import GobalVar
+from mianinit import MianInit
 
 
 class DStreeView(QTreeWidget):
@@ -58,7 +55,6 @@ class DStreeView(QTreeWidget):
         self.init()
 
     def init(self):
-
         if GobalVar.var_dataserverini:
             self.addtopLevel()
             self.addchilds()
@@ -133,58 +129,38 @@ class DStreeView(QTreeWidget):
 
 class Viewone(QWidget):
     # tothreadsin = pyqtSignal()
+    __parsiz = None
 
-    def __init__(self, par):
+    def __init__(self):
         super(Viewone, self).__init__()
-        self.parsiz = par
         # print(self.parsiz)
         self.box = QVBoxLayout()
         self.box.setContentsMargins(0, 0, 0, 0)
-        self.pusbt =  QPushButton()
-        self.rstartbt = QPushButton()
         self.lab = QLabel()
+        self.viewcontent = DStreeView(self.__parsiz)
         self.uiset()
 
     def uiset(self):
-        self.pusbt.resize(50,30)
-        self.pusbt.setText("暂停")
-        self.rstartbt.resize(50,30)
-        self.rstartbt.setText("重启")
         self.lab.setText("DATA SERVER:")
         qlabfont = QFont()
         qlabfont.setPointSize(10)
         self.lab.setFont(qlabfont)
-        self.viewcontent = DStreeView(self.parsiz)
-        self.box.addWidget(self.pusbt)
-        self.box.addWidget(self.rstartbt)
         self.box.addWidget(self.lab)
         self.box.addWidget(self.viewcontent)
         self.box.addStretch()
         self.setLayout(self.box)
 
-        self.pusbt.clicked.connect(self.busingla1)
-        self.rstartbt.clicked.connect(self.busingla2)
+        # self.refreshthread(GobalVar.var_dataserverini)
 
-        self.refreshthread(GobalVar.var_dataserverini)
-
+    def setpar(self,par):
+        if par:
+            self.__parsiz = par
+"""
     def refreshthread(self,inipar):
         self.server = ServerRun(inipar)
         self.server.statusfresh.connect(self.treefreshsolt)
         self.server.start()
         self.server.settimer()
-
-    def busingla1(self):
-        print("getdata testing,PUSH")
-        self.server.statusFlg = False
-        self.server.killtimer()
-        self.server.getdataFlg = True
-
-        self.server.settimer()
-
-
-    def busingla2(self):
-        print("rstartbt is clicked")
-        self.server.rsettimer()
 
     def treefreshsolt(self,d):
         print(d)
@@ -207,7 +183,7 @@ class Viewone(QWidget):
                                 self.viewcontent.topLevelItem(i).child(child_cow).setText(2,str(d["filesnum"]))
                 else:
                     pass
-
+"""
 
 
 class CustomizeFrame(QFrame):
@@ -220,45 +196,9 @@ class CustomizeFrame(QFrame):
         self.setStyleSheet("background-color:white;border-width:0px;")
         self.box = QVBoxLayout()
         self.box.setContentsMargins(0,0,0,0)
-        self.vc_0 = Viewone(self.size().width())
+        self.vc_0 = Viewone()
+        self.vc_0.setpar(self.size().width())
         self.box.addWidget(self.vc_0)
         self.setLayout(self.box)
 
 
-class MainWin(QMainWindow):
-    appname = "VIEWMODE"
-
-    def __init__(self):
-        super(MainWin, self).__init__()
-        self.central_widget = QWidget()
-        self.box_central = QHBoxLayout()
-        self.r_sider = CustomizeFrame()
-
-        self.mainui()
-
-    def mainui(self):
-        self.setWindowTitle(MainWin.appname)
-        self.resize(800,600)
-        self.central_widget.setStyleSheet("background-color:gainsboro")
-        self.setCentralWidget(self.central_widget)
-
-        self.box_central.addStretch()
-        self.box_central.addWidget(self.r_sider)
-
-        self.box_central.setContentsMargins(0, 0, 2, 0)
-        self.central_widget.setLayout(self.box_central)
-
-
-
-
-
-if __name__ == "__main__":
-
-    sys_init = MianInit()
-    sys_init.sysinit()
-
-    app = QApplication(sys.argv)
-    r = MainWin()
-    r.show()
-    app.setFont(QFont("Times New Roman, SimSun, SimSun-ExtB, YouYuan")) #SimSun
-    sys.exit(app.exec_())

@@ -1,8 +1,11 @@
 
 from .uimods.vtoolmenu import *
+from .uimods.status_right import *
 
 
-class DrawerVtMenu:
+
+
+class DrawVtMenu:
     """
     1\n BUTTON STR from a dict
     2\n BUTTON height'sSIZEPPOLICY from a int
@@ -11,7 +14,7 @@ class DrawerVtMenu:
     __qss = None
     __top_icon = []
     __sub_icon = None
-    __ItemWidge_par = {"ItemWidget": [3, 5, 0, 5],"formspacing":0,"formVerticalSpacing":3}
+    __ItemWidge_par = {"ItemWidget": [0, 5, 0, 5],"formspacing":0,"formVerticalSpacing":3}
 
     def __init__(self, _titls, height_par=20):
         self.titls = _titls #topname,subnamelist(dict)
@@ -58,3 +61,23 @@ class DrawerVtMenu:
             return menuui
         else:
             pass
+
+
+class DrawRstatus:
+    __qss = None
+
+    def __init__(self,wight):
+        self.wight = wight
+        self.vc_0 = Viewone()
+        self.vc_0.setpar(self.wight)
+
+    def create(self):
+        self.vc_0.uiset()
+        return self.vc_0
+
+    def addstyle(self, style):
+        if style:
+            self.__qss = style
+        else:
+            pass
+
