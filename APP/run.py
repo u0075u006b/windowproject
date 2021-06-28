@@ -5,6 +5,7 @@ from APP.UI.mainwindow import M_window
 from APP.mianinit import MianInit
 
 
+
 def data_server_th(obj):
     obj.thrun()
 
@@ -12,6 +13,7 @@ def data_server_th(obj):
 def init():
     sys_init = MianInit()
     sys_init.sysinit()
+
 
 if __name__ == "__main__":
     init()
@@ -22,6 +24,7 @@ if __name__ == "__main__":
     run = M_window()
 
     run.show()
+
     # data_server_th(run)
 
     sys.exit(app.exec_())

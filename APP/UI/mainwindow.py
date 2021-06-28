@@ -1,12 +1,14 @@
 from PyQt5.QtCore import pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QStatusBar, QWidget, QHBoxLayout, QVBoxLayout, QFrame, QLabel, \
-    QFormLayout, QPushButton
+    QFormLayout, QTextBrowser
+
+from Py.dataservers import dataserver_th
 from .vtoolmenu_info import MENU_INFO
 from APP.UI.common import QSSadd
 from .modAPI import DrawVtMenu, DrawRstatus
 from gobalvar import GobalVar
-
+from APP.mianinit import MianInit
 
 gbqss = QSSadd.readqss("./UI/qss/gb.qss")
 
@@ -53,7 +55,7 @@ class Rside_Frame_0(QFrame):
         # print("frame width %s" % self.size().width())
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Raised)
-        self.setStyleSheet("background-color:white;border-width:1px;")
+        self.setStyleSheet("background-color:white;border:0px;")
         self.box = QVBoxLayout()
         self.box.setContentsMargins(0,0,0,0)
         self.statusview = DrawRstatus(self.size().width())
@@ -63,8 +65,8 @@ class Rside_Frame_0(QFrame):
         self.setLayout(self.box)
 
 
-
 class M_window(QMainWindow):
+
     appname = "ANA SYS"
 
     def __init__(self):
@@ -74,8 +76,10 @@ class M_window(QMainWindow):
         self.left_frame = Left_Frame_0()
         self.content_frame = Content_Frame_0()
         self.rside_frame = Rside_Frame_0()
+        self.sing = MianInit.dsr
         self.mainUI()
-
+        self.dsr = dataserver_th.ServerRun(GobalVar.var_dataserverini)
+        self.dataserverrun()
 
     def mainUI(self):
         self.setWindowTitle(M_window.appname)
@@ -104,6 +108,32 @@ class M_window(QMainWindow):
         self.sta_bar.addWidget(QLabel("程序运行中    "))
         self.setStatusBar(self.sta_bar)
 
+    def dataserverrun(self):
+        self.dsr.statusfresh.connect(self.treefreshsolt)
+        self.dsr.start()
+        self.dsr.settimer()
 
+    def treefreshsolt(self, d):
+        print("d",d)
+        if d:
+            for i in range(self.rside_frame.statusview_create.viewcontent.topLevelItemCount()):#
+                if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).text(0) == "临时数据":
+                    print(d["status"])
+                    print(d["filesnum"])
+                    if d["status"] == True:
+                        for child_cow in range(self.rside_frame.statusview_create.viewcontent.topLevelItem(i).childCount()):
+                            if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).text(0) == "TEMP":
+                                self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).setIcon(0,
+                                                                                                                        self.rside_frame.statusview_create.viewcontent.childicon_true)
+                    else:
+                        pass
+                    if d["filesnum"] == None:
+                        pass
+                    else:
+                        for child_cow in range(self.rside_frame.statusview_create.viewcontent.topLevelItem(i).childCount()):
+                            if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).text(0) == "TEMP":
+                                self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).setText(2, str(d["filesnum"]))
+                else:
+                    pass
 
 

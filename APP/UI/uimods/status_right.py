@@ -164,35 +164,6 @@ class Viewone(QFrame):
     def setpar(self,par):
         if par:
             self.__parsiz = par
-"""
-    def refreshthread(self,inipar):
-        self.server = ServerRun(inipar)
-        self.server.statusfresh.connect(self.treefreshsolt)
-        self.server.start()
-        self.server.settimer()
-
-    def treefreshsolt(self,d):
-        print(d)
-        if d:
-            for i in range(self.viewcontent.topLevelItemCount()):
-                if self.viewcontent.topLevelItem(i).text(0) == "临时数据":
-                    print(d["status"])
-                    print(d["filesnum"])
-                    if d["status"] == True:
-                        for child_cow in range(self.viewcontent.topLevelItem(i).childCount()):
-                            if self.viewcontent.topLevelItem(i).child(child_cow).text(0) == "TEMP":
-                                self.viewcontent.topLevelItem(i).child(child_cow).setIcon(0, self.viewcontent.childicon_true)
-                    else:
-                        pass
-                    if d["filesnum"] == None:
-                        pass
-                    else:
-                        for child_cow in range(self.viewcontent.topLevelItem(i).childCount()):
-                            if self.viewcontent.topLevelItem(i).child(child_cow).text(0) == "TEMP":
-                                self.viewcontent.topLevelItem(i).child(child_cow).setText(2,str(d["filesnum"]))
-                else:
-                    pass
-"""
 
 
 

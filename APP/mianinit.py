@@ -2,12 +2,15 @@ from Py.ini_configparser import Config_Sec
 from gobalvar import GobalVar
 
 
+
 class MianInit:
     initargs = {
         "data_ini_path": "Py/config/datasources.ini"
     }
+    dsr = None
 
     def __init__(self):
+
         pass
 
     def sysinit(self):
@@ -17,3 +20,6 @@ class MianInit:
             setval.setval(datapar.r_itempar())
         else:
             pass
+
+
+

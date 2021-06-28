@@ -78,7 +78,7 @@ class ServerRun(QThread):
         self.statusFlg = True
         self.getdataFlg = False
         # self.cond = QWaitCondition()
-        self.mutex = QMutex()
+        # self.mutex = QMutex()
         self.config = inipr  # pr is list->dict
 
         self.filetimer = None
@@ -86,7 +86,6 @@ class ServerRun(QThread):
         self.locstimer = None
 
         self.createsrvs()
-
 
     def killtimer(self):
         print(self.filetimer)
