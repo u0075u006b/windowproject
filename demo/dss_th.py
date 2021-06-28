@@ -1,23 +1,32 @@
-from PyQt5.QtCore import QThread,pyqtSignal,QTimerEvent
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+import sys
 
 
-class DataStatusTH(QThread):
-    isout = pyqtSignal(dict)
-
+class Min(QWidget):
 
     def __init__(self):
-        super(DataStatusTH, self).__init__()
-        self.th_on = True
-        # self.cond = QWaitCondition()
-        # self.mutex = QMutex()
+        super(Min, self).__init__()
+        self.resize(800,600)
+        self.bt1 = QPushButton("A")
+        self.bt2 = QPushButton("A")
+        self.bt3 = QPushButton("A")
+        self.setui()
 
-    def hdfcheck(self):
-        pass
-    def rds_sql(self):
-        pass
-    def loc_sql(self):
-        pass
-    """def redis(self):next version add"""
+    def setui(self):
+        self.box = QHBoxLayout()
+        self.bt1.resize(40,20)
+        self.bt2.resize(40, 20)
+        self.bt3.resize(40, 20)
+        self.box.addWidget(self.bt1)
+        self.box.addWidget(self.bt2)
+        self.box.addWidget(self.bt3)
+        self.box.addStretch()
+        self.setLayout(self.box)
 
-    def run(self):
-        pass
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    r = Min()
+    r.show()
+    sys.exit(app.exec_())

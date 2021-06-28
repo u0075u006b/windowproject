@@ -49,10 +49,11 @@ class Rside_Frame_0(QFrame):
     def __init__(self):
         super(Rside_Frame_0, self).__init__()
         self.setFixedWidth(280)
+        self.setContentsMargins(0,0,0,0)
         # print("frame width %s" % self.size().width())
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Raised)
-        self.setStyleSheet("background-color:black;border-width:0px;")
+        self.setStyleSheet("background-color:white;border-width:1px;")
         self.box = QVBoxLayout()
         self.box.setContentsMargins(0,0,0,0)
         self.statusview = DrawRstatus(self.size().width())

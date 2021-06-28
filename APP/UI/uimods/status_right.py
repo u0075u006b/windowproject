@@ -4,7 +4,6 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QTimer, QTimerEvent, QWaitCondition, QMutex
 from PyQt5.QtWidgets import *
 from gobalvar import GobalVar
-from mianinit import MianInit
 
 
 class DStreeView(QTreeWidget):
@@ -20,7 +19,7 @@ class DStreeView(QTreeWidget):
     def __init__(self, par):
         super(DStreeView, self).__init__()
         self.widthsize = par
-        self.setFixedHeight(160)
+        self.setFixedHeight(140)
         # print(self.widthsize)
         # print("widthsize is %s " % self.widthsize)
         self.setContentsMargins(0,0,0,0)
@@ -127,28 +126,38 @@ class DStreeView(QTreeWidget):
                         pass
 
 
-class Viewone(QWidget):
+class Viewone(QFrame):
     # tothreadsin = pyqtSignal()
     __parsiz = None
 
     def __init__(self):
         super(Viewone, self).__init__()
         # print(self.parsiz)
+        self.setContentsMargins(0,0,0,0)
+        self.setStyleSheet("background-color:white;")
         self.box = QVBoxLayout()
         self.box.setContentsMargins(0, 0, 0, 0)
         self.lab = QLabel()
         self.viewcontent = DStreeView(self.__parsiz)
-        self.uiset()
+        # self.uiset()
 
     def uiset(self):
         self.lab.setText("DATA SERVER:")
+        self.lab.setStyleSheet("background-color:white;margin-left:5px;")
         qlabfont = QFont()
         qlabfont.setPointSize(10)
+        self.lab.setFixedHeight(20)
         self.lab.setFont(qlabfont)
         self.box.addWidget(self.lab)
         self.box.addWidget(self.viewcontent)
         self.box.addStretch()
+        self.box.setSpacing(0)
         self.setLayout(self.box)
+        # self.setFixedHeight(self.lab.size().height()+self.viewcontent.size().height())
+
+    def resizeEvent(self, event):
+        super(Viewone, self).resizeEvent(event)
+        self.setFixedHeight(self.lab.size().height()+self.viewcontent.size().height())
 
         # self.refreshthread(GobalVar.var_dataserverini)
 
@@ -186,19 +195,6 @@ class Viewone(QWidget):
 """
 
 
-class CustomizeFrame(QFrame):
-    def __init__(self):
-        super(CustomizeFrame, self).__init__()
-        self.setFixedWidth(280)
-        # print("frame width %s" % self.size().width())
-        self.setFrameShape(QFrame.Box)
-        self.setFrameShadow(QFrame.Raised)
-        self.setStyleSheet("background-color:white;border-width:0px;")
-        self.box = QVBoxLayout()
-        self.box.setContentsMargins(0,0,0,0)
-        self.vc_0 = Viewone()
-        self.vc_0.setpar(self.size().width())
-        self.box.addWidget(self.vc_0)
-        self.setLayout(self.box)
+
 
 
