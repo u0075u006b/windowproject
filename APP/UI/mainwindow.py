@@ -1,7 +1,7 @@
 from PyQt5.QtCore import pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QStatusBar, QWidget, QHBoxLayout, QVBoxLayout, QFrame, QLabel, \
-    QFormLayout, QTextBrowser
+    QFormLayout, QTextBrowser, QMessageBox
 
 from Py.dataservers import dataserver_th
 from .vtoolmenu_info import MENU_INFO
@@ -23,13 +23,13 @@ class Left_Frame_0(QFrame):
         self.setFrameShadow(QFrame.Sunken)
         self.setStyleSheet(gbqss)
         self.setContentsMargins(0, 0, 0, 0)
-        box = QFormLayout()
+        box = QVBoxLayout()
         box.setContentsMargins(0, 0, 0, 0)
         self._menu = DrawVtMenu(MENU_INFO.__menu_info__, height_par=23)
         self._menu.addstyle(QSSadd.readqss("./UI/qss/vtoolmenu.qss"))
         self._menu.settopicon("./source/icon/plus1518%26.svg", "./source/icon/minus1518%26.svg")
-        self.s = self._menu.create()
-        box.addRow(self.s)
+        self.cre_menu = self._menu.create()
+        box.addWidget(self.cre_menu)
         self.setLayout(box)
 
 
@@ -96,9 +96,9 @@ class M_window(QMainWindow):
         self.central_widget.setLayout(box_0)
         self.setstatus_bar()
 
-        self.left_frame.s.item_0.update_.connect(self.fun)
-        self.left_frame.s.item_1.update_.connect(self.fun)
-        self.left_frame.s.item_2.update_.connect(self.fun)
+        self.left_frame.cre_menu.item_0.update_.connect(self.fun)
+        self.left_frame.cre_menu.item_1.update_.connect(self.fun)
+        self.left_frame.cre_menu.item_2.update_.connect(self.fun)
 
     def fun(self, str_):
         print(str_)
@@ -110,6 +110,7 @@ class M_window(QMainWindow):
 
     def dataserverrun(self):
         self.dsr.statusfresh.connect(self.treefreshsolt)
+        self.dsr.errsignal.connect(self.treefresherrsolt)
         self.dsr.start()
         self.dsr.settimer()
 
@@ -136,4 +137,10 @@ class M_window(QMainWindow):
                 else:
                     pass
 
+    def treefresherrsolt(self, d):
+        print("d",d)
+        if d['IOError']:
+            QMessageBox.warning(self, "标题", d['IOError'], QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+        elif d['Error']:
+            QMessageBox.warning(self, "标题", d['Error'], QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
 

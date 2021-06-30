@@ -1,57 +1,7 @@
 import os
 from PyQt5.QtCore import *
+from .dataserver import Fileserver,SQLserver
 
-
-class SQLserver:  #
-
-    def __init__(self,con):
-        self.servername = con['section']
-        self.servertype = con['servertype']
-        self.dbtype_ = con['dbtype']
-        self.ipadd = con['ipadd']
-        self.user = con['username']
-        self.port = con['port']
-        self.key = con['password']
-
-
-class Fileserver:
-    def __init__(self,con):
-        self.servername = con['section']
-        self.servertype = con['servertype']
-        self.dbtype_ = con['dbtype']
-        self.user = con['username']
-        self.filepath = os.path.join(os.getcwd(), con['filepath'])
-        self.filesuffix = ""
-        self.can_on = False # 运行标记
-        self.checkfilepath()
-        self.checkfiletype()
-
-    def checkfilepath(self):
-        if os.path.isdir(self.filepath): # 检查文件路径存在
-            self.can_on = True
-        else:
-            pass
-
-    def checkfiletype(self):
-        if self.dbtype_ == "hdf":
-            self.filesuffix = ".h5"
-        elif self.dbtype_ == "xls":
-            self.filesuffix = ".xls"
-        else:
-            pass
-
-    def re_filelist(self):
-
-        if self.can_on:
-            files = os.listdir(self.filepath)
-            result = []
-            if files:
-                for file in files:
-                    if os.path.splitext(file)[1] == self.filesuffix:
-                        result.append(file)
-                return result #is list
-
-        # isinstance(us, BaseException)#检查是否为错误
 
 class ServerRun(QThread):
     """
@@ -59,7 +9,7 @@ class ServerRun(QThread):
     """
     timetestcon = 0
     datarefresh = pyqtSignal(dict)
-    errsignal = pyqtSignal(str)
+    errsignal = pyqtSignal(dict)
     statusfresh = pyqtSignal(dict)
 
     ckeck_times={"file_t":2000,"rds_t":5000,"locs_t":2000}
@@ -70,7 +20,6 @@ class ServerRun(QThread):
     servers = []
 
     names = locals()
-
 
     def __init__(self, inipr):
         super(ServerRun, self).__init__()
@@ -128,21 +77,31 @@ class ServerRun(QThread):
 
     def statuscheck(self):
         rdic = {}
-
         for srv in self.servers:
-
             if srv.servertype == 'files':
                 _r = srv.re_filelist()
-                if _r :
-                    rdic["status"] = True
-                    rdic["filesnum"] = str(len(_r))
-                    print("执行到这里1")
-                    return rdic
+                print("_r type:",type(_r))
+                if isinstance(_r, list):
+                    if _r :
+                        rdic["status"] = True
+                        rdic["filesnum"] = str(len(_r))
+                        print("执行到这里1")
+                        return rdic
+                    elif _r == []:
+                        rdic["status"] = True
+                        rdic["filesnum"] = str(0)
+                        print("执行到这里2")
+                        return rdic
+                    else:
+                        rdic["status"] = False
+                        rdic["filesnum"] = None
+                        print("执行到这里3")
+                        return rdic
+                elif isinstance(_r, dict):
+                    self.errsignal.emit(_r)
+                    print("eee")
                 else:
-                    rdic["status"] = False
-                    rdic["filesnum"] = None
-                    print("执行到这里2")
-                    return rdic
+                    pass
             else:
                 pass
 
@@ -172,7 +131,6 @@ class ServerRun(QThread):
         while self.th_on:
             if self.getdataFlg:
                 self.changegetdata()
-
 
     def timerEvent(self, e=QTimerEvent):
         if e.timerId() == self.filetimer:
