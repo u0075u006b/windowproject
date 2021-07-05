@@ -13,13 +13,13 @@ def data_server_th(obj):
 def init():
     sys_init = MianInit()
     sys_init.sysinit()
-
+    sys_init.dataservers_init()
 
 if __name__ == "__main__":
     init()
     app = QApplication(sys.argv)
-    f = QFont("pingfangSC")
-    app.setFont(f)
+    # f = QFont("pingfangSC")
+    # app.setFont(f)
     # print(app.font().family())
     run = M_window()
 

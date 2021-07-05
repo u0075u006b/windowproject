@@ -78,7 +78,7 @@ class M_window(QMainWindow):
         self.rside_frame = Rside_Frame_0()
         self.sing = MianInit.dsr
         self.mainUI()
-        self.dsr = dataserver_th.ServerRun(GobalVar.var_dataserverini)
+        self.dsr = dataserver_th.ServerRun()
         self.dataserverrun()
 
     def mainUI(self):
@@ -113,7 +113,7 @@ class M_window(QMainWindow):
         self.dsr.errsignal.connect(self.treefresherrsolt)
         self.dsr.start()
         self.dsr.settimer()
-
+    #
     def treefreshsolt(self, d):
         print("d",d)
         if d:
@@ -124,8 +124,7 @@ class M_window(QMainWindow):
                     if d["status"] == True:
                         for child_cow in range(self.rside_frame.statusview_create.viewcontent.topLevelItem(i).childCount()):
                             if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).text(0) == "TEMP":
-                                self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).setIcon(0,
-                                                                                                                        self.rside_frame.statusview_create.viewcontent.childicon_true)
+                                self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).setIcon(0,self.rside_frame.statusview_create.viewcontent.childicon_true)
                     else:
                         pass
                     if d["filesnum"] == None:
@@ -140,6 +139,15 @@ class M_window(QMainWindow):
     def treefresherrsolt(self, d):
         print("d",d)
         if d['IOError']:
+            for i in range(self.rside_frame.statusview_create.viewcontent.topLevelItemCount()):#
+                if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).text(0) == "临时数据":
+                    for child_cow in range(self.rside_frame.statusview_create.viewcontent.topLevelItem(i).childCount()):
+                        if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).text(0) == "TEMP":
+                            self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).setIcon(0,self.rside_frame.statusview_create.viewcontent.childicon_flase)
+                    for child_cow in range(self.rside_frame.statusview_create.viewcontent.topLevelItem(i).childCount()):
+                        if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).text(
+                                0) == "TEMP":
+                            self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).setText(2,str("null"))
             QMessageBox.warning(self, "标题", d['IOError'], QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         elif d['Error']:
             QMessageBox.warning(self, "标题", d['Error'], QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)

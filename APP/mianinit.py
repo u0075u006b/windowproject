@@ -1,5 +1,6 @@
 from Py.ini_configparser import Config_Sec
 from gobalvar import GobalVar
+from Py.dataservers.dataserver import DServers
 
 
 
@@ -10,7 +11,6 @@ class MianInit:
     dsr = None
 
     def __init__(self):
-
         pass
 
     def sysinit(self):
@@ -21,5 +21,9 @@ class MianInit:
         else:
             pass
 
-
-
+    @staticmethod
+    def dataservers_init():
+        if not DServers.servers:
+            DServers.inits(GobalVar.var_dataserverini)
+        for s in DServers.servers:
+            print(s)

@@ -1,6 +1,6 @@
 import os
 from PyQt5.QtCore import *
-from .dataserver import Fileserver,SQLserver
+from .dataserver import DServers
 
 
 class ServerRun(QThread):
@@ -17,24 +17,20 @@ class ServerRun(QThread):
     refresh_rds = {}
     refresh_locs = {}
     refresh_files = {}
-    servers = []
+    servers = DServers.servers
 
-    names = locals()
-
-    def __init__(self, inipr):
+    def __init__(self):
         super(ServerRun, self).__init__()
         self.th_on = True
+        self.err_on = True
         self.statusFlg = True
         self.getdataFlg = False
         # self.cond = QWaitCondition()
         # self.mutex = QMutex()
-        self.config = inipr  # pr is list->dict
 
         self.filetimer = None
         self.rdstimer = None
         self.locstimer = None
-
-        self.createsrvs()
 
     def killtimer(self):
         print(self.filetimer)
@@ -61,49 +57,41 @@ class ServerRun(QThread):
             self.rdstimer = self.startTimer(self.ckeck_times["rds_t"])
             self.locstimer = self.startTimer(self.ckeck_times["locs_t"])
 
-    def createsrvs(self):
-        for con in self.config:
-            if con['servertype'] == 'files':
-                self.names[con['section']] = Fileserver(con)
-                self.servers.append(self.names[con['section']])
-            elif con['servertype'] == 'rds':
-                self.names[con['section']] = SQLserver(con)
-                self.servers.append(self.names[con['section']])
-            elif con['servertype'] == 'locs':
-                self.names[con['section']] = SQLserver(con)
-                self.servers.append(self.names[con['section']])
-            else:
-                pass
-
-    def statuscheck(self):
+    def statuscheck(self, _type):
         rdic = {}
-        for srv in self.servers:
-            if srv.servertype == 'files':
-                _r = srv.re_filelist()
-                print("_r type:",type(_r))
-                if isinstance(_r, list):
-                    if _r :
-                        rdic["status"] = True
-                        rdic["filesnum"] = str(len(_r))
-                        print("执行到这里1")
-                        return rdic
-                    elif _r == []:
-                        rdic["status"] = True
-                        rdic["filesnum"] = str(0)
-                        print("执行到这里2")
-                        return rdic
-                    else:
-                        rdic["status"] = False
-                        rdic["filesnum"] = None
-                        print("执行到这里3")
-                        return rdic
-                elif isinstance(_r, dict):
-                    self.errsignal.emit(_r)
-                    print("eee")
+        srv = None
+        print(self.servers)
+        if _type == "files":
+            for s in self.servers:
+                if s.servertype == 'files':
+                    srv = s
+                else:
+                    continue
+            __stat, _r = srv.re_filelist()
+            print(_r)
+            if __stat:
+                if bool(_r):
+                    rdic["status"] = True
+                    rdic["filesnum"] = str(len(_r))
+                    print("执行到这里1")
+                    return rdic
+                elif bool(_r) is False:
+                    rdic["status"] = True
+                    rdic["filesnum"] = str(0)
+                    print("执行到这里2")
+                    return rdic
                 else:
                     pass
             else:
-                pass
+                rdic["status"] = False
+                rdic["Ferr"] = _r
+                print("执行到这里3")
+                return rdic
+        else:
+            pass
+
+
+
 
     # def timestart(self,file=None,rds=None,locs=None):
     #     if isinstance(file,int):
@@ -113,9 +101,14 @@ class ServerRun(QThread):
     #     if isinstance(locs, int):
     #         self.locstimer = self.startTimer(locs)
 
-    def sendfilemsg(self,rus):
-        if rus:
+    def sendsingal(self,rus):
+        if rus["status"]:
             self.statusfresh.emit(rus)
+            self.err_on = True
+        else:
+            if self.err_on:
+                self.errsignal.emit(rus["Ferr"])
+                self.err_on = False
 
     def changegetdata(self):
 
@@ -125,9 +118,10 @@ class ServerRun(QThread):
 
     def run(self):
         if self.statusFlg:
-            s = self.statuscheck()
-            print("qthread statuscheck:", s)
-            self.sendfilemsg(s)
+            __result = self.statuscheck("files")
+            print("qthread statuscheck:", __result)
+            self.sendsingal(__result)
+
         while self.th_on:
             if self.getdataFlg:
                 self.changegetdata()
@@ -135,8 +129,9 @@ class ServerRun(QThread):
     def timerEvent(self, e=QTimerEvent):
         if e.timerId() == self.filetimer:
             print("file计时器运行",self.timetestcon)
-            s = self.statuscheck()
-            self.sendfilemsg(s)
+            __result = self.statuscheck("files")
+            print("qthread statuscheck(timer):", __result)
+            self.sendsingal(__result)
         if e.timerId() == self.rdstimer:
             print("rds计时器运行")
         if e.timerId() == self.locstimer:
