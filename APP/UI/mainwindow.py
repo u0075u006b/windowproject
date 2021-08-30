@@ -2,13 +2,14 @@ from PyQt5.QtCore import pyqtSlot, pyqtSignal
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QStatusBar, QWidget, QHBoxLayout, QVBoxLayout, QFrame, QLabel, \
     QFormLayout, QTextBrowser, QMessageBox
-
+import PyQt5.sip
 from Py.dataservers import dataserver_th
 from .vtoolmenu_info import MENU_INFO
 from APP.UI.common import QSSadd
 from .modAPI import DrawVtMenu, DrawRstatus
-from gobalvar import GobalVar
 from APP.mianinit import MianInit
+
+from .uimods.contentwid import dataload as dl
 
 gbqss = QSSadd.readqss("./UI/qss/gb.qss")
 
@@ -34,18 +35,27 @@ class Left_Frame_0(QFrame):
 
 
 class Content_Frame_0(QFrame):
+
     def __init__(self):
         super(Content_Frame_0, self).__init__()
         self.setObjectName("r_frame")
         self.setFrameShape(QFrame.Box)
         self.setFrameShadow(QFrame.Sunken)
         self.setStyleSheet(gbqss)
-        box = QFormLayout()
+        self.box = QVBoxLayout()
         self.lab = QLabel()
         self.lab.setText("初始")
-        box.addWidget(self.lab)
-        self.setLayout(box)
+        self.box.addWidget(self.lab)
+        self.setLayout(self.box)
 
+    def rlay(self,n):
+        self.movewid()
+        self.newwid = n
+        self.box.addWidget(self.newwid)
+        self.setLayout(self.box)
+
+    def movewid(self):
+        print(self.box.count())
 
 class Rside_Frame_0(QFrame):
     def __init__(self):
@@ -96,13 +106,21 @@ class M_window(QMainWindow):
         self.central_widget.setLayout(box_0)
         self.setstatus_bar()
 
-        self.left_frame.cre_menu.item_0.update_.connect(self.fun)
-        self.left_frame.cre_menu.item_1.update_.connect(self.fun)
-        self.left_frame.cre_menu.item_2.update_.connect(self.fun)
+        self.left_frame.cre_menu.item_0.update_.connect(self.onclickfun)
+        self.left_frame.cre_menu.item_1.update_.connect(self.onclickfun)
+        self.left_frame.cre_menu.item_2.update_.connect(self.onclickfun)
 
-    def fun(self, str_):
+    def onclickfun(self, str_):
         print(str_)
-        self.content_frame.lab.setText(str_)
+        self.content_frame_upd(str_)
+
+
+    def content_frame_upd(self,s):
+        if s == "本地数据文件":
+            self.new = dl.LocalLoad()
+            self.content_frame.rlay(self.new)
+        else:
+            self.content_frame.lab.setText(s)
 
     def setstatus_bar(self):
         self.sta_bar.addWidget(QLabel("程序运行中    "))
@@ -114,7 +132,8 @@ class M_window(QMainWindow):
         self.dsr.start()
         self.dsr.settimer()
     #
-    def treefreshsolt(self, d):
+    def treefreshsolt(self, tag, d):
+        print(tag)
         print("d",d)
         if d:
             for i in range(self.rside_frame.statusview_create.viewcontent.topLevelItemCount()):#
@@ -136,7 +155,7 @@ class M_window(QMainWindow):
                 else:
                     pass
 
-    def treefresherrsolt(self, d):
+    def treefresherrsolt(self,d):
         print("d",d)
         if d['IOError']:
             for i in range(self.rside_frame.statusview_create.viewcontent.topLevelItemCount()):#
@@ -148,7 +167,7 @@ class M_window(QMainWindow):
                         if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).text(
                                 0) == "TEMP":
                             self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).setText(2,str("null"))
-            QMessageBox.warning(self, "标题", d['IOError'], QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+            QMessageBox.warning(self, "标题", d['IOError'], QMessageBox.Yes, QMessageBox.Yes)
         elif d['Error']:
-            QMessageBox.warning(self, "标题", d['Error'], QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+            QMessageBox.warning(self, "标题", d['Error'], QMessageBox.Yes, QMessageBox.Yes)
 

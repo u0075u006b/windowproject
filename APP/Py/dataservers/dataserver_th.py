@@ -10,7 +10,7 @@ class ServerRun(QThread):
     timetestcon = 0
     datarefresh = pyqtSignal(dict)
     errsignal = pyqtSignal(dict)
-    statusfresh = pyqtSignal(dict)
+    statusfresh = pyqtSignal(str,dict)
 
     ckeck_times={"file_t":2000,"rds_t":5000,"locs_t":2000}
 
@@ -101,9 +101,9 @@ class ServerRun(QThread):
     #     if isinstance(locs, int):
     #         self.locstimer = self.startTimer(locs)
 
-    def sendsingal(self,rus):
+    def sendsingal(self,tag,rus):
         if rus["status"]:
-            self.statusfresh.emit(rus)
+            self.statusfresh.emit(tag,rus)
             self.err_on = True
         else:
             if self.err_on:
@@ -120,7 +120,7 @@ class ServerRun(QThread):
         if self.statusFlg:
             __result = self.statuscheck("files")
             print("qthread statuscheck:", __result)
-            self.sendsingal(__result)
+            self.sendsingal("files", __result)
 
         while self.th_on:
             if self.getdataFlg:
@@ -131,7 +131,7 @@ class ServerRun(QThread):
             print("file计时器运行",self.timetestcon)
             __result = self.statuscheck("files")
             print("qthread statuscheck(timer):", __result)
-            self.sendsingal(__result)
+            self.sendsingal("files", __result)
         if e.timerId() == self.rdstimer:
             print("rds计时器运行")
         if e.timerId() == self.locstimer:

@@ -181,10 +181,114 @@ if __name__ == "__main__":
             pass
 """
 
+# -*- coding: utf-8 -*-
 
+################################################################################
+## Form generated from reading UI file 'designerNtmHMD.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.1
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
-
-
-
-
-
+# from PySide2.QtCore import *
+# from PySide2.QtGui import *
+# from PySide2.QtWidgets import *
+#
+#
+# class Ui_Form(object):
+#     def setupUi(self, Form):
+#         if not Form.objectName():
+#             Form.setObjectName(u"Form")
+#         Form.resize(1027, 752)
+#         self.groupBox = QGroupBox(Form)
+#         self.groupBox.setObjectName(u"groupBox")
+#         self.groupBox.setGeometry(QRect(30, 60, 661, 121))
+#         self.layoutWidget = QWidget(self.groupBox)
+#         self.layoutWidget.setObjectName(u"layoutWidget")
+#         self.layoutWidget.setGeometry(QRect(50, 70, 511, 25))
+#         self.horizontalLayout_2 = QHBoxLayout(self.layoutWidget)
+#         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+#         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+#         self.label_2 = QLabel(self.layoutWidget)
+#         self.label_2.setObjectName(u"label_2")
+#
+#         self.horizontalLayout_2.addWidget(self.label_2)
+#
+#         self.line_2 = QFrame(self.layoutWidget)
+#         self.line_2.setObjectName(u"line_2")
+#         self.line_2.setFrameShape(QFrame.VLine)
+#         self.line_2.setFrameShadow(QFrame.Sunken)
+#
+#         self.horizontalLayout_2.addWidget(self.line_2)
+#
+#         self.pushButton_3 = QPushButton(self.layoutWidget)
+#         self.pushButton_3.setObjectName(u"pushButton_3")
+#
+#         self.horizontalLayout_2.addWidget(self.pushButton_3)
+#
+#         self.lineEdit_2 = QLineEdit(self.layoutWidget)
+#         self.lineEdit_2.setObjectName(u"lineEdit_2")
+#
+#         self.horizontalLayout_2.addWidget(self.lineEdit_2)
+#
+#         self.pushButton_4 = QPushButton(self.layoutWidget)
+#         self.pushButton_4.setObjectName(u"pushButton_4")
+#
+#         self.horizontalLayout_2.addWidget(self.pushButton_4)
+#
+#         self.widget = QWidget(self.groupBox)
+#         self.widget.setObjectName(u"widget")
+#         self.widget.setGeometry(QRect(50, 30, 511, 25))
+#         self.horizontalLayout = QHBoxLayout(self.widget)
+#         self.horizontalLayout.setObjectName(u"horizontalLayout")
+#         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+#         self.label = QLabel(self.widget)
+#         self.label.setObjectName(u"label")
+#
+#         self.horizontalLayout.addWidget(self.label)
+#
+#         self.line = QFrame(self.widget)
+#         self.line.setObjectName(u"line")
+#         self.line.setFrameShape(QFrame.VLine)
+#         self.line.setFrameShadow(QFrame.Sunken)
+#
+#         self.horizontalLayout.addWidget(self.line)
+#
+#         self.pushButton = QPushButton(self.widget)
+#         self.pushButton.setObjectName(u"pushButton")
+#
+#         self.horizontalLayout.addWidget(self.pushButton)
+#
+#         self.lineEdit = QLineEdit(self.widget)
+#         self.lineEdit.setObjectName(u"lineEdit")
+#
+#         self.horizontalLayout.addWidget(self.lineEdit)
+#
+#         self.pushButton_2 = QPushButton(self.widget)
+#         self.pushButton_2.setObjectName(u"pushButton_2")
+#
+#         self.horizontalLayout.addWidget(self.pushButton_2)
+#
+#
+#         self.retranslateUi(Form)
+#
+#         QMetaObject.connectSlotsByName(Form)
+#     # setupUi
+#
+#     def retranslateUi(self, Form):
+#         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+#         self.groupBox.setTitle(QCoreApplication.translate("Form", u"\u52a0\u8f7d\u672c\u5730\u6570\u636e", None))
+#         self.label_2.setText(QCoreApplication.translate("Form", u"Txt ", None))
+#         self.pushButton_3.setText(QCoreApplication.translate("Form", u"\u52a0\u8f7d\u8def\u5f84", None))
+#         self.pushButton_4.setText(QCoreApplication.translate("Form", u"\u663e\u793a", None))
+#         self.label.setText(QCoreApplication.translate("Form", u"HDF5", None))
+#         self.pushButton.setText(QCoreApplication.translate("Form", u"\u52a0\u8f7d\u8def\u5f84", None))
+#         self.pushButton_2.setText(QCoreApplication.translate("Form", u"\u663e\u793a", None))
+#     # retranslateUi
+#
+#
+#
+#
+#
+#

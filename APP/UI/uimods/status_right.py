@@ -1,7 +1,7 @@
 import os
 import sys
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QTimer, QTimerEvent, QWaitCondition, QMutex
+from PyQt5.QtCore import QSize,  pyqtSignal, QTimer, QTimerEvent, QWaitCondition, QMutex
 from PyQt5.QtWidgets import *
 from gobalvar import GobalVar
 
@@ -165,7 +165,29 @@ class Viewone(QFrame):
         if par:
             self.__parsiz = par
 
-
-
-
-
+    # def refreshdata(self,toptag,childtag,data):
+    #
+    #     for i in range(self.rside_frame.statusview_create.viewcontent.topLevelItemCount()):  #
+    #         if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).text(0) == "临时数据":
+    #             print(data["status"])
+    #             print(data["filesnum"])
+    #             if d["status"] == True:
+    #                 for child_cow in range(self.rside_frame.statusview_create.viewcontent.topLevelItem(i).childCount()):
+    #                     if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).text(
+    #                             0) == "TEMP":
+    #                         self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).setIcon(0,
+    #                                                                                                                 self.rside_frame.statusview_create.viewcontent.childicon_true)
+    #             else:
+    #                 pass
+    #             if d["filesnum"] == None:
+    #                 pass
+    #             else:
+    #                 for child_cow in range(self.rside_frame.statusview_create.viewcontent.topLevelItem(i).childCount()):
+    #                     if self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).text(
+    #                             0) == "TEMP":
+    #                         self.rside_frame.statusview_create.viewcontent.topLevelItem(i).child(child_cow).setText(2,
+    #                                                                                                                 str(
+    #                                                                                                                     d[
+    #                                                                                                                         "filesnum"]))
+    #         else:
+    #             pass
